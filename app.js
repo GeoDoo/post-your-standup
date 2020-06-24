@@ -3,6 +3,9 @@ const { App } = require("@slack/bolt");
 const fetch = require("node-fetch");
 const moment = require("moment");
 const sqlite3 = require("sqlite3").verbose();
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // open database in memory
 let db = new sqlite3.Database("./app.db", (err) => {
@@ -10,6 +13,8 @@ let db = new sqlite3.Database("./app.db", (err) => {
     return console.error(err.message);
   }
 });
+
+// db.run("CREATE TABLE projects(name text)");
 
 let savedProject;
 db.get(`SELECT name FROM projects WHERE name = ?`, [`${process.env.PROJECT}`], (err, row) => {
