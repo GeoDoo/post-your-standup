@@ -1,0 +1,26 @@
+{
+  "name": "Post Your Standup",
+  "version": "0.0.1",
+  "description": "An interactive Slack app to help you post your standup based on your Jira boards",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@slack/bolt": "^2.1.1",
+    "node-fetch": "^2.6.0",
+    "moment": "^2.27.0",
+    "sqlite3": "^4.2.0"
+  },
+  "engines": {
+    "node": "11.x"
+  },
+  "repository": {
+    "url": ""
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "express"
+  ]
+}
