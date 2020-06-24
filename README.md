@@ -8,3 +8,6 @@
 
 ### Issues
 Please create an issue if you have any problems or want to ask a question about development etc.
+
+### Useful links
+1. https://github.com/slackapi/bolt-js
