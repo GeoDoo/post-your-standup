@@ -1,5 +1,5 @@
 {
-  "name": "Post Your Standup",
+  "name": "post-your-standup",
   "version": "0.0.1",
   "description": "An interactive Slack app to help you post your standup based on your Jira boards",
   "main": "app.js",
