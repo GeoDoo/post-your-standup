@@ -17,9 +17,14 @@
     "node": "11.x"
   },
   "repository": {
-    "url": ""
+    "type": "git",
+    "url": "git+https://github.com/GeoDoo/post-your-standup.git"
   },
-  "license": "MIT",
+  "author": "George Karametas <geometas@hotmail.com> (https://geodoo.work/)",
+  "bugs": {
+    "url": "https://github.com/GeoDoo/post-your-standup/issues"
+  },
+  "license": "GNU GPL v3.0",
   "keywords": [
     "node",
     "express"
