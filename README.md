@@ -1,10 +1,20 @@
 ### Steps to run the app
 
-1. Create a test workspace for you to work on
-2. `npm install` and `npm start` to run the app locally
-3. You will probably need a public URL. Try exposing your localhost with [ngrok.com](https://ngrok.com/)
-4. [Join geodoo Slack workspace](https://join.slack.com/t/geodoo/shared_invite/zt-fcn7iygw-F05NMjqmv42GTh6TRKTBOA)
+1. `npm install` and `npm start` to run the app locally
+2. You will probably need a public URL. Try exposing your localhost with [ngrok.com](https://ngrok.com/)
+3. [Join geodoo Slack workspace](https://join.slack.com/t/geodoo/shared_invite/zt-fcn7iygw-F05NMjqmv42GTh6TRKTBOA)
 4. You will need certain env variables to setup the project
+5. You will need an Atlassian account of course and an API token for your account for basic authentication. Check: https://confluence.atlassian.com/cloud/api-tokens-938839638.html
+
+### Example .env file
+```
+SLACK_BOT_TOKEN=<from slack app>
+SLACK_SIGNING_SECRET=<from slack app>
+JIRA_AUTH_USER=<basic auth for Jira>
+JIRA_API_TOKEN=<basic auth for Jira>
+BASE_URL=<this is provisional here: it will be provided by users>
+PROJECT=<this is provisional here: it will be provided by users>
+```
 
 ### Issues
 Please create an issue if you have any problems or want to ask a question about development etc.
