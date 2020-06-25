@@ -28,6 +28,3 @@ Please create an issue if you have any problems or want to ask a question about 
 1. https://github.com/slackapi/bolt-js
 2. https://slack.dev/bolt-js/tutorial/getting-started
 3. https://api.slack.com/start/building
-
-### Github pages link
-https://geodoo.github.io/post-your-standup/
