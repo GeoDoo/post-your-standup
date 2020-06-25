@@ -1,32 +1,35 @@
-// Require the Bolt package (github.com/slackapi/bolt)
 const { App } = require("@slack/bolt");
 const fetch = require("node-fetch");
 const moment = require("moment");
 const sqlite3 = require("sqlite3").verbose();
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
 dotenv.config();
 
-// open database in memory
 let db = new sqlite3.Database("./app.db", (err) => {
   if (err) {
     return console.error(err.message);
   }
 });
 
+// TODO: setup DB elsewhere
 // db.run("CREATE TABLE projects(name text)");
 
 let savedProject;
-db.get(`SELECT name FROM projects WHERE name = ?`, [`${process.env.PROJECT}`], (err, row) => {
-  if (err) {
-    throw err;
-  }
+db.get(
+  `SELECT name FROM projects WHERE name = ?`,
+  [`${process.env.PROJECT}`],
+  (err, row) => {
+    if (err) {
+      throw err;
+    }
 
-  if (row) {
-    savedProject = row.name;
-    console.log("inside", savedProject);
+    if (row) {
+      savedProject = row.name;
+      console.log("inside", savedProject);
+    }
   }
-});
+);
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -52,9 +55,7 @@ const formatIssues = (data) => {
     .join("");
 };
 
-// All the room in the world for your code
 app.command("/standup", async ({ ack, payload, context }) => {
-  // Acknowledge the command request
   ack();
 
   let additionalTasks;
@@ -64,9 +65,7 @@ app.command("/standup", async ({ ack, payload, context }) => {
     try {
       return await app.client.chat.postMessage({
         token: context.botToken,
-        // Channel to send message to
         channel: payload.channel_id,
-        // Include a button in the message (or whatever blocks you want!)
         blocks: [
           {
             type: "section",
@@ -77,8 +76,7 @@ app.command("/standup", async ({ ack, payload, context }) => {
             },
           },
         ],
-        // Text in the notification
-        text: "Message from Yo App",
+        text: "Message from Post Your Standup App",
       });
     } catch (error) {
       console.log(error);
@@ -94,7 +92,7 @@ app.command("/standup", async ({ ack, payload, context }) => {
   }
 
   const token = btoa();
-  // columns need to be user selected from Home settings
+  // TODO: columns need to be user selected from Home settings
   const jql = `project=${process.env.PROJECT} AND assignee=currentuser() AND status IN ("Dev Prioritised")`;
 
   try {
@@ -145,11 +143,8 @@ app.command("/standup", async ({ ack, payload, context }) => {
 
     await app.client.chat.postMessage({
       token: context.botToken,
-      // Channel to send message to
       channel: payload.channel_id,
-      // Include a button in the message (or whatever blocks you want!)
       blocks,
-      // Text in the notification
       text: "Message from Post Your Standup App",
     });
   } catch (error) {
@@ -159,30 +154,13 @@ app.command("/standup", async ({ ack, payload, context }) => {
 });
 
 app.event("app_home_opened", async ({ event, context }) => {
-  // get all channels private and public
-  // const list = await app.client.conversations.list({
-  //   // The token you used to initialize your app
-  //   token: process.env.SLACK_BOT_TOKEN,
-  //   exclude_archived: true,
-  //   types: "public_channel,private_channel" // magic
-  // });
-  // console.log(list.channels.map(channel => channel.name));
-  // console.log("app_home_opened", event);
   try {
-
     await app.client.views.publish({
-      /* retrieves your xoxb token from context */
       token: context.botToken,
-
-      /* the user that opened your app's app home */
       user_id: event.user,
-
-      /* the view payload that appears in the app home*/
       view: {
         type: "home",
         callback_id: "home_view",
-
-        /* body of the view */
         blocks: [
           {
             type: "section",
@@ -241,16 +219,13 @@ app.event("app_home_opened", async ({ event, context }) => {
       },
     });
   } catch (error) {
-    // console.error(error);
     console.error(error.data.response_metadata);
   }
 });
 
 app.action("open:setup:jira:modal", async ({ ack, body, context }) => {
-  // Acknowledge the button request
   ack();
 
-  // console.log(body);
   try {
     await app.client.views.open({
       token: context.botToken,
@@ -367,7 +342,6 @@ app.action("open:setup:jira:modal", async ({ ack, body, context }) => {
 });
 
 app.action("project:selection", async ({ ack, body, context }) => {
-  // Acknowledge the button request
   ack();
 
   console.log("project:selection", body);
@@ -410,8 +384,7 @@ app.action("project:selection", async ({ ack, body, context }) => {
         },
         value: status.name,
       }));
-    console.log(statusOptionsForSelectedProject);
-    // // Update the message
+
     const resultss = await fetch(`${process.env.BASE_URL}/rest/api/2/project`, {
       headers: {
         Authorization: `Basic ${token}`,
@@ -437,7 +410,6 @@ app.action("project:selection", async ({ ack, body, context }) => {
         value: project.key,
       }));
     const result = await app.client.conversations.list({
-      // The token you used to initialize your app
       token: process.env.SLACK_BOT_TOKEN,
       exclude_archived: true,
       types: "public_channel,private_channel", // magic
@@ -450,19 +422,13 @@ app.action("project:selection", async ({ ack, body, context }) => {
       },
       value: channel.name,
     }));
+
     await app.client.views.publish({
-      /* retrieves your xoxb token from context */
       token: context.botToken,
-
-      /* the user that opened your app's app home */
       user_id: body.user.id,
-
-      /* the view payload that appears in the app home*/
       view: {
         type: "home",
         callback_id: "home_view",
-
-        /* body of the view */
         blocks: [
           {
             type: "section",
@@ -521,15 +487,6 @@ app.action("project:selection", async ({ ack, body, context }) => {
           {
             type: "actions",
             elements: [
-              // {
-              //   type: "channels_select",
-              //   action_id: "channel:selection",
-              //   placeholder: {
-              //     type: "plain_text",
-              //     text: "Select a channel",
-              //     emoji: true
-              //   }
-              // },
               {
                 type: "static_select",
                 action_id: "channel:selection",
@@ -539,6 +496,7 @@ app.action("project:selection", async ({ ack, body, context }) => {
                   emoji: true,
                 },
                 options: allChannelsOptions,
+                // leave for reference, we ll need to show the initial value from the DB
                 // initial_option: {
                 //   text: {
                 //     type: "plain_text",
@@ -605,7 +563,6 @@ app.action("project:selection", async ({ ack, body, context }) => {
 });
 
 app.action("channel:selection", async ({ ack, body, context }) => {
-  // Acknowledge the button request
   ack();
 
   console.log("channel:selection", body);
@@ -645,7 +602,6 @@ app.action("channel:selection", async ({ ack, body, context }) => {
 });
 
 app.view("lala_view", async ({ ack, body, view, context }) => {
-  // Acknowledge the view_submission event
   ack();
 
   // console.log("YAYAYAYAYAYAYAY", body);
@@ -658,15 +614,6 @@ app.view("lala_view", async ({ ack, body, view, context }) => {
   // console.log(body);
   // console.log(view);
 
-  // Do whatever you want with the input data - here we're saving it to a DB then sending the user a verification of their submission
-
-  // Assume there's an input block with `test_input` as the block_id and `dreamy_input` as the action_id
-  //   const val = view['state']['values']['test_input']['dreamy_input'];
-  //   const user = body['user']['id'];
-
-  //   // You'll probably want to store these values somewhere
-  //   console.log(val);
-  //   console.log(user);
   try {
     const token = btoa();
     const results = await fetch(`${process.env.BASE_URL}/rest/api/2/project`, {
@@ -695,7 +642,6 @@ app.view("lala_view", async ({ ack, body, view, context }) => {
       }));
 
     const result = await app.client.conversations.list({
-      // The token you used to initialize your app
       token: process.env.SLACK_BOT_TOKEN,
       exclude_archived: true,
       types: "public_channel,private_channel", // magic
@@ -710,18 +656,11 @@ app.view("lala_view", async ({ ack, body, view, context }) => {
     }));
 
     await app.client.views.publish({
-      /* retrieves your xoxb token from context */
       token: context.botToken,
-
-      /* the user that opened your app's app home */
       user_id: body.user.id,
-
-      /* the view payload that appears in the app home*/
       view: {
         type: "home",
         callback_id: "home_view",
-
-        /* body of the view */
         blocks: [
           {
             type: "section",
@@ -780,15 +719,6 @@ app.view("lala_view", async ({ ack, body, view, context }) => {
           {
             type: "actions",
             elements: [
-              // {
-              //   type: "channels_select",
-              //   action_id: "channel:selection",
-              //   placeholder: {
-              //     type: "plain_text",
-              //     text: "Select a channel",
-              //     emoji: true
-              //   }
-              // },
               {
                 type: "static_select",
                 action_id: "channel:selection",
@@ -863,11 +793,13 @@ app.view("lala_view", async ({ ack, body, view, context }) => {
   }
 });
 
+// TODO: fix this
 // close the database connection
 db.close((err) => {
   if (err) {
     return console.error(err.message);
   }
+
   console.log("Close the database connection.");
 });
 
