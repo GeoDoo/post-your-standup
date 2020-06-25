@@ -17,7 +17,7 @@ PROJECT=<this is provisional: it will be provided by users after db is set up>
 ```
 
 ### Contributing
-Apart from all the rest you will need to fork the project, do your changes and open a PR from your fork to this repo. Please check here on how to do that: https://help.github.com/en/github/getting-started-with-github/fork-a-repo
+Apart from all the above, you will need to fork the project, do your changes and open a PR from your fork to this repo. Please check here on how to do that: https://help.github.com/en/github/getting-started-with-github/fork-a-repo
 
 Also, please check Issues tab first and work on an existing one or open a new one if you think so, but when you open a PR, please link the issue on the sidebar to the right. Check here for more info: https://help.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue
 
