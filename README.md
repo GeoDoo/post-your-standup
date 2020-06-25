@@ -10,8 +10,8 @@
 ```
 SLACK_BOT_TOKEN=<from slack app>
 SLACK_SIGNING_SECRET=<from slack app>
-JIRA_AUTH_USER=<basic auth for Jira>
-JIRA_API_TOKEN=<basic auth for Jira>
+JIRA_AUTH_USER=<basic auth for Jira: this is provisional: it will be provided by users after db is set up>
+JIRA_API_TOKEN=<basic auth for Jira: this is provisional: it will be provided by users after db is set up>
 BASE_URL=<this is provisional: it will be provided by users after db is set up>
 PROJECT=<this is provisional: it will be provided by users after db is set up>
 ```
