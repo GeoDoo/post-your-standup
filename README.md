@@ -16,7 +16,7 @@ BASE_URL=<this is provisional here: it will be provided by users>
 PROJECT=<this is provisional here: it will be provided by users>
 ```
 
-### Contributing
+### Contributing
 Apart from all the rest you will need to fork the project, do your changes and open a PR from your fork to this repo. Please check here on how to do that: https://help.github.com/en/github/getting-started-with-github/fork-a-repo
 
 ### Issues
