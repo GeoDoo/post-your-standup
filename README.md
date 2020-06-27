@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/GeoDoo/post-your-standup.svg?style=svg)](https://circleci.com/gh/GeoDoo/post-your-standup)
+
 ### Steps to run the app
 
 1. `npm install` and `npm start` to run the app locally

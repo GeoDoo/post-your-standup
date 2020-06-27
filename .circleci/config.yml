@@ -1,0 +1,45 @@
+version: 2.1
+orbs:
+  node: circleci/node@3.0.0
+
+jobs:
+  build:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - checkout
+      - node/install:
+          npm-version: latest
+          node-version: 12.18.1
+      - run:
+          command: npm ci
+      - run: node --version
+
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "0f:22:e5:20:ef:19:e2:1a:a6:bf:5d:0c:87:84:40:44"
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh $SSH_USER@$SSH_HOST 'cd /var/www/html/post-your-standup/ &&
+            git checkout master &&
+            git pull &&
+            node --version &&
+            npm install && 
+            npm run prod:restart'
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

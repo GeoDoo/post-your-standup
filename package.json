@@ -4,13 +4,18 @@
   "description": "An interactive Slack app to help you post your standup based on your Jira boards",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "prod:start": "pm2 start server.js -i -1",
+    "prod:restart": "pm2 restart server.js -i -1",
+    "prod:reload:all": "pm2 reload all",
+    "prod:stop:all": "pm2 delete all"
   },
   "dependencies": {
     "@slack/bolt": "^2.1.1",
     "dotenv": "^8.2.0",
     "moment": "^2.27.0",
     "node-fetch": "^2.6.0",
+    "pm2": "^4.4.0",
     "sqlite3": "^4.2.0"
   },
   "engines": {
