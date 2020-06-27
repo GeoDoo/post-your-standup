@@ -8,5 +8,9 @@ RUN npm ci --only=production
 
 COPY . .
 
-EXPOSE 3000
-CMD [ "node", "server.js" ]
+# Stage - Production
+FROM nginx:1.17-alpine
+COPY --from=build /usr/src/app /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
