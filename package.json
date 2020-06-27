@@ -4,7 +4,7 @@
   "description": "An interactive Slack app to help you post your standup based on your Jira boards",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon server.js"
   },
   "dependencies": {
     "@slack/bolt": "^2.1.1",
@@ -28,5 +28,8 @@
   "keywords": [
     "node",
     "express"
-  ]
+  ],
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }
