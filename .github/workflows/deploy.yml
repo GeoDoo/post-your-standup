@@ -1,15 +1,11 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
+name: Pipeline
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,17 +19,28 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run build --if-present
+      - name: Publish to Github Packages Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: GeoDoo/post-your-standup/post-your-standup
+          registry: docker.pkg.github.com
+          username: ${{ secrets.GB_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: prod.Dockerfile
+          tags: latest
       - name: Deploy to server
         uses: appleboy/ssh-action@master
+        env:
+          GB_USERNAME: ${{ secrets.GB_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
+          envs: GB_USERNAME, GITHUB_TOKEN
           script: |
-            cd /var/www/html/post-your-standup/
-            git checkout master
-            git pull
-            npm install 
-            npm start
+            docker stop $(docker ps -a -q)
+            docker login docker.pkg.github.com -u $GB_USERNAME -p $GITHUB_TOKEN
+            docker pull docker.pkg.github.com/GeoDoo/post-your-standup/post-your-standup:latest
+            docker run -dit -p 80:3000 docker.pkg.github.com/GeoDoo/post-your-standup/post-your-standup:latest
