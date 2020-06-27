@@ -24,23 +24,23 @@ jobs:
         with:
           name: GeoDoo/post-your-standup/post-your-standup
           registry: docker.pkg.github.com
-          username: ${{ secrets.GB_USERNAME }}
+          username: ${{ secrets.GH_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: prod.Dockerfile
           tags: latest
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         env:
-          GB_USERNAME: ${{ secrets.GB_USERNAME }}
+          GH_USERNAME: ${{ secrets.GH_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          envs: GB_USERNAME, GITHUB_TOKEN
+          envs: GH_USERNAME, GITHUB_TOKEN
           script: |
             docker stop $(docker ps -a -q)
-            docker login docker.pkg.github.com -u $GB_USERNAME -p $GITHUB_TOKEN
+            docker login docker.pkg.github.com -u $GH_USERNAME -p $GITHUB_TOKEN
             docker pull docker.pkg.github.com/GeoDoo/post-your-standup/post-your-standup:latest
             docker run -dit -p 80:80 docker.pkg.github.com/GeoDoo/post-your-standup/post-your-standup:latest
