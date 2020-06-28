@@ -15,10 +15,13 @@ jobs:
     machine:
       enabled: true
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "e4:fe:71:37:e5:10:30:62:1e:3d:27:d5:90:41:1b:a4"
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "whoami"
+            ssh $SSH_USER@$SSH_HOST 'whoami'
 
 workflows:
   version: 2
