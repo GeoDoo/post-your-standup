@@ -5,5 +5,5 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      rebase-strategy: "auto"
-      milestone: 7
+    rebase-strategy: "auto"
+    milestone: 7
