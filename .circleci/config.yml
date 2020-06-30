@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Publish to Github packages
           command: |
-            docker login docker.pkg.github.com -u geodoo -p $GITHUB_TOKEN
+            echo "$DOCKER_PASS" | docker login docker.pkg.github.com -u geodoo --password-stdin
             docker build -t docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest -f Dockerfile.prod .
             docker push docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest
 
