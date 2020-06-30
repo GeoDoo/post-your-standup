@@ -5,6 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
+    "test:unit": "jest --env=node --passWithNoTests",
+    "test:unit:cov": "jest --env=node --passWithNoTests --coverage",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
     "prod:start": "pm2 start server.js -i -1",
     "prod:restart": "pm2 restart server.js -i -1",
     "prod:reload:all": "pm2 reload all",
@@ -19,7 +22,7 @@
     "sqlite3": "^4.2.0"
   },
   "engines": {
-    "node": "11.x"
+    "node": "12.x"
   },
   "repository": {
     "type": "git",
@@ -35,6 +38,8 @@
     "express"
   ],
   "devDependencies": {
+    "codecov": "^3.7.0",
+    "jest": "^26.1.0",
     "nodemon": "^2.0.4"
   }
 }
