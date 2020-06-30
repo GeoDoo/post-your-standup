@@ -14,6 +14,23 @@ jobs:
           node-version: 12.18.1
       - run:
           command: npm ci
+      - slack/status
+
+  publish:
+    docker:
+      - image: "circleci/node:12.18.1"
+    steps:
+      - checkout
+      - setup_remote_docker:
+          reusable: true
+          exclusive: true
+      - run:
+          name: Publish to Github packages
+          command: |
+            echo "$DOCKER_PASS" | docker login docker.pkg.github.com -u $DOCKER_USER --password-stdin
+            docker build -t docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest -f Dockerfile.prod .
+            docker push docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest
+      - slack/status
 
   deploy:
     machine:
@@ -30,27 +47,22 @@ jobs:
             git pull &&
             npm install && 
             npm run prod:restart'
-
-  notify:
-    machine:
-      enabled: true
-    steps:
       - slack/status
 
 workflows:
   version: 2
-  build-and-deploy:
+  pipeline:
     jobs:
       - build
-      - deploy:
+      - publish:
           requires:
             - build
           filters:
             branches:
               only: master
-      - notify:
+      - deploy:
           requires:
-            - deploy
+            - build
           filters:
             branches:
               only: master
