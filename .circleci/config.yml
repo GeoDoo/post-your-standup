@@ -15,6 +15,18 @@ jobs:
       - run:
           command: npm ci
 
+  publish:
+    machine:
+      enabled: true
+    steps:
+      - checkout
+      - run:
+          name: Publish to Github packages
+          command: |
+            docker login docker.pkg.github.com -u geodoo -p $GITHUB_TOKEN
+            docker build -t docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest -f Dockerfile.prod .
+            docker push docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest
+
   deploy:
     machine:
       enabled: true
@@ -42,6 +54,12 @@ workflows:
   build-and-deploy:
     jobs:
       - build
+      - publish:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
       - deploy:
           requires:
             - build
