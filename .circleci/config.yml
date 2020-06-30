@@ -36,7 +36,7 @@ jobs:
           command: npm run report-coverage -- -t $CODECOV_TOKEN
       - slack/status:
           failure_message: ":red_circle: $CIRCLE_JOB job has failed!"
-          success_message: ":tada: $CIRCLE_JOB job has succeeded!"  
+          success_message: ":tada: $CIRCLE_JOB job has succeeded!"
 
   publish:
     docker:
@@ -83,9 +83,6 @@ workflows:
       - test:
           requires:
             - build
-          filters:
-            branches:
-              only: master
       - publish:
           requires:
             - test
