@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/GeoDoo/post-your-standup.svg?style=svg)](https://circleci.com/gh/GeoDoo/post-your-standup)
+[![codecov](https://codecov.io/gh/GeoDoo/post-your-standup/branch/master/graph/badge.svg)](https://codecov.io/gh/GeoDoo/post-your-standup)
 
 ### Steps to run the app
 
