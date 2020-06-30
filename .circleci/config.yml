@@ -80,15 +80,21 @@ workflows:
   pipeline:
     jobs:
       - build
-      - publish:
+      - test:
           requires:
             - build
           filters:
             branches:
               only: master
+      - publish:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
       - deploy:
           requires:
-            - build
+            - test
           filters:
             branches:
               only: master
