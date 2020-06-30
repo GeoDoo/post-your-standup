@@ -14,6 +14,7 @@ jobs:
           node-version: 12.18.1
       - run:
           command: npm ci
+      - slack/status
 
   publish:
     machine:
@@ -26,6 +27,7 @@ jobs:
             echo "$DOCKER_PASS" | docker login docker.pkg.github.com -u geodoo --password-stdin
             docker build -t docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest -f Dockerfile.prod .
             docker push docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest
+      - slack/status
 
   deploy:
     machine:
@@ -42,11 +44,6 @@ jobs:
             git pull &&
             npm install && 
             npm run prod:restart'
-
-  notify:
-    machine:
-      enabled: true
-    steps:
       - slack/status
 
 workflows:
@@ -63,12 +60,6 @@ workflows:
       - deploy:
           requires:
             - build
-          filters:
-            branches:
-              only: master
-      - notify:
-          requires:
-            - deploy
           filters:
             branches:
               only: master
