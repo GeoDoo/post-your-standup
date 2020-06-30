@@ -17,10 +17,13 @@ jobs:
       - slack/status
 
   publish:
-    machine:
-      enabled: true
+    docker:
+      - image: "circleci/node:12.18.1"
     steps:
       - checkout
+      - setup_remote_docker:
+          reusable: true
+          exclusive: true
       - run:
           name: Publish to Github packages
           command: |
