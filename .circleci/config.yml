@@ -14,7 +14,9 @@ jobs:
           node-version: 12.18.1
       - run:
           command: npm ci
-      - slack/status
+      - slack/status:
+          failure_message: ":red_circle: $CIRCLE_JOB job has failed!"
+          success_message: ":tada: $CIRCLE_JOB job has succeeded!"
 
   publish:
     docker:
@@ -30,7 +32,9 @@ jobs:
             echo "$DOCKER_PASS" | docker login docker.pkg.github.com -u $DOCKER_USER --password-stdin
             docker build -t docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest -f Dockerfile.prod .
             docker push docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest
-      - slack/status
+      - slack/status:
+          failure_message: ":red_circle: $CIRCLE_JOB job has failed!"
+          success_message: ":tada: $CIRCLE_JOB job has succeeded!"
 
   deploy:
     machine:
@@ -47,7 +51,9 @@ jobs:
             git pull &&
             npm install && 
             npm run prod:restart'
-      - slack/status
+      - slack/status:
+          failure_message: ":red_circle: $CIRCLE_JOB job has failed!"
+          success_message: ":tada: $CIRCLE_JOB job has succeeded!"
 
 workflows:
   version: 2
