@@ -17,14 +17,14 @@ jobs:
       - slack/status
 
   publish:
-    docker:
-      - image: "circleci/node:12.18.1"
+    machine:
+      enabled: true
     steps:
       - checkout
       - run:
           name: Publish to Github packages
           command: |
-            echo "$DOCKER_PASS" | docker login docker.pkg.github.com -u "$DOCKER_USER" --password-stdin
+            echo "$DOCKER_PASS" | docker login docker.pkg.github.com -u $DOCKER_USER --password-stdin
             docker build -t docker.pkg.github.com/GeoDoo/post-your-standup/post-your-standup:latest -f Dockerfile.prod .
             docker push docker.pkg.github.com/GeoDoo/post-your-standup/post-your-standup:latest
       - slack/status
