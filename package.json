@@ -19,7 +19,7 @@
     "moment": "^2.27.0",
     "node-fetch": "^2.6.0",
     "pm2": "^4.4.0",
-    "sqlite3": "^4.2.0"
+    "sqlite3": "^5.0.0"
   },
   "engines": {
     "node": "12.x"
