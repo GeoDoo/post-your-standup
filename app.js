@@ -1,14 +1,13 @@
 const { App, ExpressReceiver } = require("@slack/bolt");
-const dotenv = require("dotenv");
+const standup = require("./commands/standup");
+const onAppHomeOpened = require("./events/app-home-opened");
+const setupJira = require("./actions/open-setup-jira-modal");
+const selectChannel = require("./actions/channel-selection");
+const selectProject = require("./actions/project-selection");
+const lala = require("./views/lala");
+const { EVENTS, ACTIONS, VIEWS, COMMANDS } = require("./constants");
 
-const standupCommand = require("./commands/standup");
-const appHomeOpenedEvent = require("./events/app-home-opened");
-const openSetupJiraModalEvent = require("./actions/open-setup-jira-modal");
-const channelSelectionEvent = require("./actions/channel-selection");
-const projectSelectionEvent = require("./actions/project-selection");
-const lalaView = require("./views/lala");
-
-dotenv.config();
+require("dotenv").config();
 
 const expressReceiver = new ExpressReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -21,14 +20,14 @@ const app = new App({
 
 const expressApp = expressReceiver.app;
 
-app.command("/standup", standupCommand(app));
+app.command(COMMANDS.STANDUP, standup(app));
 
-app.event("app_home_opened", appHomeOpenedEvent(app));
+app.event(EVENTS.APP_HOME_VIEWED, onAppHomeOpened(app));
 
-app.action("open:setup:jira:modal", openSetupJiraModalEvent(app));
-app.action("channel:selection", channelSelectionEvent(app));
-app.action("project:selection", projectSelectionEvent(app));
+app.action(ACTIONS.OPEN_SETUP_JIRA_MODAL, setupJira(app));
+app.action(ACTIONS.CHANNEL_SELECTION, selectChannel(app));
+app.action(ACTIONS.PROJECT_SELECTION, selectProject(app));
 
-app.view("lala_view", lalaView(app));
+app.view(VIEWS.LALA_VIEW, lala(app));
 
 module.exports = expressApp;

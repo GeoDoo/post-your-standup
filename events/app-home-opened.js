@@ -1,3 +1,5 @@
+const { ACTIONS } = require("../constants");
+
 module.exports = (app) => async ({ event, context }) => {
   try {
     await app.client.views.publish({
@@ -56,7 +58,7 @@ module.exports = (app) => async ({ event, context }) => {
                   text: "Authenticate me",
                   emoji: true,
                 },
-                action_id: "open:setup:jira:modal",
+                action_id: ACTIONS.OPEN_SETUP_JIRA_MODAL,
               },
             ],
           },
