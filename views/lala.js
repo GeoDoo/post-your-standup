@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
 const { btoa } = require("../utils");
+const { ACTIONS } = require("../constants");
 
 module.exports = (app) => async ({ ack, body, view, context }) => {
   ack();
@@ -112,7 +113,7 @@ module.exports = (app) => async ({ ack, body, view, context }) => {
                   text: "Change Jira account",
                   emoji: true,
                 },
-                action_id: "open:setup:jira:modal",
+                action_id: ACTIONS.OPEN_SETUP_JIRA_MODAL,
               },
             ],
           },
@@ -121,7 +122,7 @@ module.exports = (app) => async ({ ack, body, view, context }) => {
             elements: [
               {
                 type: "static_select",
-                action_id: "channel:selection",
+                action_id: ACTIONS.CHANNEL_SELECTION,
                 placeholder: {
                   type: "plain_text",
                   text: "Select a channel",
@@ -139,7 +140,7 @@ module.exports = (app) => async ({ ack, body, view, context }) => {
               },
               {
                 type: "static_select",
-                action_id: "project:selection",
+                action_id: ACTIONS.PROJECT_SELECTION,
                 placeholder: {
                   type: "plain_text",
                   text: "Select your project",
