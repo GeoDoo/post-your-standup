@@ -1,5 +1,3 @@
-### Welcome to our app
-
 In this section you can find a guide on how to setup the project locally, develop your solution and contribute to our project.
 
 ### Run the app locally
@@ -29,7 +27,7 @@ At this point, we will guide you through how to create a test Slack app:
 1. When you click on `Create a new app` button you are going to see and fill in something like this:
 
 <p align="center">
-  <img alt="Create a new app" src="images/create-a-new-app.png">
+  <img alt="Create a new app" src="docs/images/create-a-new-app.png">
 </p>
 
 You then hit `Create app` button
@@ -37,13 +35,13 @@ You then hit `Create app` button
 2. You will see a screen like this:
 
 <p align="center">
-  <img alt="New app dashboard" src="images/new-app-dashboard.png">
+  <img alt="New app dashboard" src="docs/images/new-app-dashboard.png">
 </p>
 
 3. In the current page you will need to find your `Signing secret` and fill in the designated variable in your `.env` file.
 
 <p align="center">
-  <img alt="Signing secret" src="images/signing-secret.png">
+  <img alt="Signing secret" src="docs/images/signing-secret.png">
 </p>
 
 4. Navigate to
