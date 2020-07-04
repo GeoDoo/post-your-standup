@@ -75,7 +75,7 @@ jobs:
           name: Deploy Over SSH
           command: |
             ssh $SSH_USER@$SSH_HOST 'cd /var/www/html/post-your-standup/ &&
-            git merge --abort &&
+            git checkout master &&
             git fetch origin &&
             git reset --hard origin/master &&
             git pull &&
