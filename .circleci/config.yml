@@ -75,10 +75,10 @@ jobs:
           name: Deploy Over SSH
           command: |
             ssh $SSH_USER@$SSH_HOST 'cd /var/www/html/post-your-standup/ &&
-            git checkout master &&
             git merge --abort &&
-            git fetch &&
+            git fetch origin &&
             git reset --hard origin/master &&
+            git pull &&
             npm install && 
             npm run prod:start'
       - slack/status:
