@@ -40,8 +40,21 @@
   ],
   "devDependencies": {
     "codecov": "^3.7.0",
+    "commitizen": "^4.1.2",
+    "cz-conventional-changelog": "^3.2.0",
+    "husky": "^4.2.5",
     "jest": "^26.1.0",
     "nodemon": "^2.0.4",
     "semantic-release": "^17.1.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
   }
 }
