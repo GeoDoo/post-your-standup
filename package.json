@@ -11,7 +11,8 @@
     "prod:start": "pm2 start server.js -i -1",
     "prod:restart": "pm2 restart server.js -i -1",
     "prod:reload:all": "pm2 reload all",
-    "prod:stop:all": "pm2 delete all"
+    "prod:stop:all": "pm2 delete all",
+    "release": "semantic-release"
   },
   "dependencies": {
     "@slack/bolt": "^2.1.1",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "codecov": "^3.7.0",
     "jest": "^26.1.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "semantic-release": "^17.1.1"
   }
 }
