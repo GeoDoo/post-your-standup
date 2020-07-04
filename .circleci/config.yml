@@ -38,6 +38,9 @@ jobs:
   release:
     executor: common
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "0f:22:e5:20:ef:19:e2:1a:a6:bf:5d:0c:87:84:40:44"
       - checkout
       - run:
           command: npm ci
@@ -99,13 +102,13 @@ workflows:
               only: master
       - publish:
           requires:
-            - test
+            - release
           filters:
             branches:
               only: master
       - deploy:
           requires:
-            - test
+            - release
           filters:
             branches:
               only: master
