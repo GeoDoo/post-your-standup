@@ -4,8 +4,11 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ### Contributing
+
 If you are interested to contribute to our project, you can find a more comprehensive guide on how you can do that in our [contributing section](CONTRIBUTING.md).
 
 ### Issues
+
 Please create an issue if you have any problems or want to ask a question about development etc.
 
+This work is licensed under the [GPL-3.0 License](LICENSE.md).
