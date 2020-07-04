@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  database:
+    image: mongo
+    container_name: 'standup-mongo-db'
+    environment:
+      - MONGO_INITDB_DATABASE=${DB_NAME}
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+      - ${DB_VOLUME_PATH}:/data/db

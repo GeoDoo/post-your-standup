@@ -15,7 +15,9 @@
     "prod:stop:all": "pm2 delete all",
     "release": "semantic-release",
     "lint": "eslint .",
-    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md)\""
+    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md)\"",
+    "docker-dev": "docker-compose up",
+    "docker-prod": "docker-compose up -d"
   },
   "dependencies": {
     "@slack/bolt": "^2.1.1",
