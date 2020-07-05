@@ -10,3 +10,5 @@ services:
     volumes:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
       - ${DB_VOLUME_PATH}:/data/db
+    ports:
+      - ${DB_PORT}:27017
