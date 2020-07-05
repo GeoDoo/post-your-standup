@@ -1,61 +1,61 @@
-const { ACTIONS } = require("../constants");
+const { ACTIONS } = require('../constants')
 
-module.exports = (app) => async ({ event, context }) => {
+module.exports = app => async ({ event, context }) => {
   try {
     await app.client.views.publish({
       token: context.botToken,
       user_id: event.user,
       view: {
-        type: "home",
-        callback_id: "home_view",
+        type: 'home',
+        callback_id: 'home_view',
         blocks: [
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
-              text: "*Welcome to your _Post Your Standup_ app*",
+              type: 'mrkdwn',
+              text: '*Welcome to your _Post Your Standup_ app*',
             },
           },
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
+              type: 'mrkdwn',
               text:
-                "Our app enables teams to collaborate more efficiently by posting their standups for a Jira project to their dedicated channels.\nMake your project manager happy, team! :tada::tada::tada:\n",
+                'Our app enables teams to collaborate more efficiently by posting their standups for a Jira project to their dedicated channels.\nMake your project manager happy, team! :tada::tada::tada:\n',
             },
           },
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
-              text: "\n",
+              type: 'mrkdwn',
+              text: '\n',
             },
           },
           {
-            type: "divider",
+            type: 'divider',
           },
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
-              text: ":gear: *Settings*\n",
+              type: 'mrkdwn',
+              text: ':gear: *Settings*\n',
             },
           },
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
-              text: "Setup basic authentication for your Jira projects\n",
+              type: 'mrkdwn',
+              text: 'Setup basic authentication for your Jira projects\n',
             },
           },
           {
-            type: "actions",
+            type: 'actions',
             elements: [
               {
-                type: "button",
+                type: 'button',
                 text: {
-                  type: "plain_text",
-                  text: "Authenticate me",
+                  type: 'plain_text',
+                  text: 'Authenticate me',
                   emoji: true,
                 },
                 action_id: ACTIONS.OPEN_SETUP_JIRA_MODAL,
@@ -64,8 +64,8 @@ module.exports = (app) => async ({ event, context }) => {
           },
         ],
       },
-    });
+    })
   } catch (error) {
-    console.error(error.data.response_metadata);
+    console.error(error.data.response_metadata)
   }
-};
+}

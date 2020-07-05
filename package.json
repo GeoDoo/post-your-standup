@@ -12,7 +12,9 @@
     "prod:restart": "pm2 restart server.js -i -1",
     "prod:reload:all": "pm2 reload all",
     "prod:stop:all": "pm2 delete all",
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md)\""
   },
   "dependencies": {
     "@slack/bolt": "^2.1.1",
@@ -42,9 +44,15 @@
     "codecov": "^3.7.0",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
+    "eslint": "^7.4.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
+    "lint-staged": "^10.2.11",
     "nodemon": "^2.0.4",
+    "prettier": "^2.0.5",
     "semantic-release": "^17.1.1"
   },
   "config": {
@@ -54,7 +62,18 @@
   },
   "husky": {
     "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
+      "pre-commit": "npm run lint && npm run format"
     }
+  },
+  "lint-staged": {
+    "*.+(js|jsx)": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.+(json|css|md)": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

@@ -1,0 +1,22 @@
+{
+  "env": {
+    "commonjs": true,
+    "es2020": true,
+    "node": true
+  },
+  "extends": ["prettier", "google"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "semi": "off",
+    "object-curly-spacing": "off",
+    "indent": "off",
+    "arrow-parens": "off",
+    "max-len": "off",
+    "quotes": "off",
+    "operator-linebreak": "off"
+  }
+}
