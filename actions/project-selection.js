@@ -10,7 +10,7 @@ module.exports = app => async ({ ack, body, context }) => {
   const selectedProject = body.actions[0].selected_option.value // save to DB
 
   try {
-    const token = btoa()
+    const token = btoa(process.env.JIRA_AUTH_USER, process.env.JIRA_API_TOKEN)
     const results = await fetch(
       `${process.env.BASE_URL}/rest/api/2/project/${selectedProject}/statuses`,
       {
