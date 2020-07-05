@@ -17,7 +17,7 @@ module.exports = app => async ({ ack, body, view, context }) => {
   // console.log(view);
 
   try {
-    const token = btoa()
+    const token = btoa(process.env.JIRA_AUTH_USER, process.env.JIRA_API_TOKEN)
     const results = await fetch(`${process.env.BASE_URL}/rest/api/2/project`, {
       headers: {
         Authorization: `Basic ${token}`,

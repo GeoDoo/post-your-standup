@@ -36,7 +36,7 @@ module.exports = app => async ({ ack, payload, context }) => {
       : ''
   }
 
-  const token = btoa()
+  const token = btoa(process.env.JIRA_AUTH_USER, process.env.JIRA_API_TOKEN)
   // TODO: columns need to be user selected from Home settings
   const jql = `project=${process.env.PROJECT} AND assignee=currentuser() AND status IN ("Dev Prioritised")`
 
