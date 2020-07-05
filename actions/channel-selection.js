@@ -1,7 +1,7 @@
-module.exports = (app) => async ({ ack, body, context }) => {
-  ack();
+module.exports = app => async ({ ack, body, context }) => {
+  ack()
 
-  console.log("channel:selection", body);
+  console.log('channel:selection', body)
 
   // const selectedProject = body.actions[0].selected_option.value; // save to DB
 
@@ -26,6 +26,6 @@ module.exports = (app) => async ({ ack, body, context }) => {
     // });
     // console.log(result);
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}

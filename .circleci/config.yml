@@ -16,8 +16,8 @@ jobs:
       - run:
           command: npm ci
       - slack/status:
-          failure_message: ":red_circle: $CIRCLE_JOB job has failed!"
-          success_message: ":tada: $CIRCLE_JOB job has succeeded!"
+          failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
+          success_message: ':tada: $CIRCLE_JOB job has succeeded!'
 
   test:
     executor: common
@@ -32,8 +32,8 @@ jobs:
       - run:
           command: npm run report-coverage -- -t $CODECOV_TOKEN
       - slack/status:
-          failure_message: ":red_circle: $CIRCLE_JOB job has failed!"
-          success_message: ":tada: $CIRCLE_JOB job has succeeded!"
+          failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
+          success_message: ':tada: $CIRCLE_JOB job has succeeded!'
 
   release:
     executor: common
@@ -44,8 +44,8 @@ jobs:
       - run:
           command: npm rum release
       - slack/status:
-          failure_message: ":red_circle: $CIRCLE_JOB job has failed!"
-          success_message: ":tada: $CIRCLE_JOB job has succeeded!"
+          failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
+          success_message: ':tada: $CIRCLE_JOB job has succeeded!'
 
   publish:
     executor: common
@@ -61,8 +61,8 @@ jobs:
             docker build -t docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest -f Dockerfile.prod .
             docker push docker.pkg.github.com/geodoo/post-your-standup/post-your-standup:latest
       - slack/status:
-          failure_message: ":red_circle: $CIRCLE_JOB job has failed!"
-          success_message: ":tada: $CIRCLE_JOB job has succeeded!"
+          failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
+          success_message: ':tada: $CIRCLE_JOB job has succeeded!'
 
   deploy:
     machine:
@@ -70,7 +70,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "0f:22:e5:20:ef:19:e2:1a:a6:bf:5d:0c:87:84:40:44"
+            - '0f:22:e5:20:ef:19:e2:1a:a6:bf:5d:0c:87:84:40:44'
       - run:
           name: Deploy Over SSH
           command: |
@@ -82,8 +82,8 @@ jobs:
             npm install && 
             npm run prod:start'
       - slack/status:
-          failure_message: ":red_circle: $CIRCLE_JOB job has failed!"
-          success_message: ":tada: $CIRCLE_JOB job has succeeded!"
+          failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
+          success_message: ':tada: $CIRCLE_JOB job has succeeded!'
 
 workflows:
   version: 2

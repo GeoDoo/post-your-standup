@@ -1,8 +1,8 @@
-const expressApp = require("./app");
+const expressApp = require('./app')
 
-(async () => {
+;(async () => {
   // Start your app
   expressApp.listen(process.env.PORT || 3000, () =>
-    console.log("⚡️ Bolt app is running!")
-  );
-})();
+    console.log('⚡️ Bolt app is running!'),
+  )
+})()

@@ -1,116 +1,119 @@
-const fetch = require("node-fetch");
-const { btoa } = require("../utils");
-const { ACTIONS } = require("../constants");
+/* eslint-disable no-unused-vars */
+const fetch = require('node-fetch')
+const { btoa } = require('../utils')
+const { ACTIONS } = require('../constants')
 
-module.exports = (app) => async ({ ack, body, view, context }) => {
-  ack();
+module.exports = app => async ({ ack, body, view, context }) => {
+  ack()
 
   // console.log("YAYAYAYAYAYAYAY", body);
   // console.log(view.state.values);
-  const jiraEmail = view.state.values.jira_email.email.value.trim();
-  const jiraToken = view.state.values.jira_token.token.value.trim();
-  const jiraProjectDomain = view.state.values.jira_domain.projectDomain.value.trim();
+  const jiraEmail = view.state.values.jira_email.email.value.trim()
+  const jiraToken = view.state.values.jira_token.token.value.trim()
+  const jiraProjectDomain = view.state.values.jira_domain.projectDomain.value.trim()
 
   // console.log(jiraEmail, jiraToken, jiraProjectDomain);
   // console.log(body);
   // console.log(view);
 
   try {
-    const token = btoa();
+    const token = btoa()
     const results = await fetch(`${process.env.BASE_URL}/rest/api/2/project`, {
       headers: {
         Authorization: `Basic ${token}`,
       },
-    });
-    const projects = await results.json();
+    })
+    const projects = await results.json()
     const projectSelectOptions = projects
       .sort((a, b) => {
         if (a.name < b.name) {
-          return -1;
+          return -1
         }
+
         if (a.name > b.name) {
-          return 1;
+          return 1
         }
-        return 0;
+
+        return 0
       })
-      .map((project) => ({
+      .map(project => ({
         text: {
-          type: "plain_text",
+          type: 'plain_text',
           text: `${project.name} (${project.key})`,
           emoji: true,
         },
         value: project.key,
-      }));
+      }))
 
     const result = await app.client.conversations.list({
       token: process.env.SLACK_BOT_TOKEN,
       exclude_archived: true,
-      types: "public_channel,private_channel", // magic
-    });
-    const allChannelsOptions = result.channels.map((channel) => ({
+      types: 'public_channel,private_channel', // magic
+    })
+    const allChannelsOptions = result.channels.map(channel => ({
       text: {
-        type: "plain_text",
+        type: 'plain_text',
         text: channel.name,
         emoji: true,
       },
       value: channel.name,
-    }));
+    }))
 
     await app.client.views.publish({
       token: context.botToken,
       user_id: body.user.id,
       view: {
-        type: "home",
-        callback_id: "home_view",
+        type: 'home',
+        callback_id: 'home_view',
         blocks: [
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
-              text: "*Welcome to your _Post Your Standup_ app*",
+              type: 'mrkdwn',
+              text: '*Welcome to your _Post Your Standup_ app*',
             },
           },
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
+              type: 'mrkdwn',
               text:
-                "Our app enables teams to collaborate more efficiently by posting their standups for a Jira project to their dedicated channels.\nMake your project manager happy, team! :tada::tada::tada:\n",
+                'Our app enables teams to collaborate more efficiently by posting their standups for a Jira project to their dedicated channels.\nMake your project manager happy, team! :tada::tada::tada:\n',
             },
           },
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
-              text: "\n",
+              type: 'mrkdwn',
+              text: '\n',
             },
           },
           {
-            type: "divider",
+            type: 'divider',
           },
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
-              text: ":gear: *Settings*\n",
+              type: 'mrkdwn',
+              text: ':gear: *Settings*\n',
             },
           },
           {
-            type: "section",
+            type: 'section',
             text: {
-              type: "mrkdwn",
+              type: 'mrkdwn',
               text:
-                "Basic authentication has already been successfully set up. Congrats!\nIf you wish to change Jira account though, you can set a new one by clicking below:\n",
+                'Basic authentication has already been successfully set up. Congrats!\nIf you wish to change Jira account though, you can set a new one by clicking below:\n',
             },
           },
           {
-            type: "actions",
+            type: 'actions',
             elements: [
               {
-                type: "button",
+                type: 'button',
                 text: {
-                  type: "plain_text",
-                  text: "Change Jira account",
+                  type: 'plain_text',
+                  text: 'Change Jira account',
                   emoji: true,
                 },
                 action_id: ACTIONS.OPEN_SETUP_JIRA_MODAL,
@@ -118,14 +121,14 @@ module.exports = (app) => async ({ ack, body, view, context }) => {
             ],
           },
           {
-            type: "actions",
+            type: 'actions',
             elements: [
               {
-                type: "static_select",
+                type: 'static_select',
                 action_id: ACTIONS.CHANNEL_SELECTION,
                 placeholder: {
-                  type: "plain_text",
-                  text: "Select a channel",
+                  type: 'plain_text',
+                  text: 'Select a channel',
                   emoji: true,
                 },
                 options: allChannelsOptions,
@@ -139,11 +142,11 @@ module.exports = (app) => async ({ ack, body, view, context }) => {
                 // }
               },
               {
-                type: "static_select",
+                type: 'static_select',
                 action_id: ACTIONS.PROJECT_SELECTION,
                 placeholder: {
-                  type: "plain_text",
-                  text: "Select your project",
+                  type: 'plain_text',
+                  text: 'Select your project',
                   emoji: true,
                 },
                 options: projectSelectOptions,
@@ -175,21 +178,21 @@ module.exports = (app) => async ({ ack, body, view, context }) => {
               //   // }
               // },
               {
-                type: "button",
+                type: 'button',
                 text: {
-                  type: "plain_text",
-                  text: "Add another",
+                  type: 'plain_text',
+                  text: 'Add another',
                   emoji: true,
                 },
-                value: "add_another_project_to_channel",
-                action_id: "add:project_to_channel",
+                value: 'add_another_project_to_channel',
+                action_id: 'add:project_to_channel',
               },
             ],
           },
         ],
       },
-    });
+    })
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
