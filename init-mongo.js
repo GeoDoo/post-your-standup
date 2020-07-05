@@ -1,12 +1,10 @@
-db.createUser(
+db.createUser({
+  user: 'standup',
+  pwd: 'lefteris',
+  roles: [
     {
-        user: "standup",
-        pwd: "lefteris",
-        roles: [
-            {
-                role: "readWrite",
-                db: "standup",
-            }
-        ],
-    }
-);
+      role: 'readWrite',
+      db: 'standup',
+    },
+  ],
+})
