@@ -1,6 +1,7 @@
 {
   "name": "post-your-standup",
   "version": "0.0.1",
+  "private": true,
   "description": "An interactive Slack app to help you post your standup based on your Jira boards",
   "main": "app.js",
   "scripts": {
