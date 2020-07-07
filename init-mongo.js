@@ -1,10 +1,6 @@
-db.auth('standup', 'lefteris')
-
-db = db.getSiblingDB('standup')
-
 db.createUser({
-  user: 'lala',
-  pwd: 'lalakis',
+  user: 'standup',
+  pwd: 'lefteris',
   roles: [
     {
       role: 'readWrite',
