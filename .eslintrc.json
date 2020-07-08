@@ -17,6 +17,14 @@
     "arrow-parens": "off",
     "max-len": "off",
     "quotes": "off",
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "always",
+        "asyncArrow": "always"
+      }
+    ]
   }
 }
