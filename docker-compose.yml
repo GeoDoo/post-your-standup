@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   database:
-    image: mongo
+    image: library/mongo:4.2
     container_name: 'standup-mongo-db'
     environment:
       - MONGO_INITDB_DATABASE=${DB_NAME}

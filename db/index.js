@@ -4,13 +4,16 @@ const connect = () => {
   mongoose.Promise = global.Promise
 
   mongoose
-    .connect('mongodb://localhost:27017/standup', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      user: 'standup',
-      pass: 'lefteris',
-    })
-    .then(() => console.log('connection succesful'))
+    .connect(
+      `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        user: process.env.DB_USERNAME,
+        pass: process.env.DB_PASSWORD,
+      },
+    )
+    .then(() => console.log('connection successful'))
     .catch(err => console.error(err))
 }
 

@@ -1,12 +1,12 @@
 const { ACTIONS } = require('../constants')
-const WorkspacesModel = require('../db/models/Workspaces')
+const WorkspaceModel = require('../db/models/Workspaces')
 
 module.exports = app => async ({ event, context }) => {
   console.log(event, context)
 
-  const workspacesModel = new WorkspacesModel({ teamId: event.view.team_id })
+  const workspaceModel = new WorkspaceModel({ teamId: event.view.team_id })
 
-  workspacesModel.save(err => {
+  workspaceModel.save(err => {
     if (err) throw err
     console.log('SAVE!')
   })
