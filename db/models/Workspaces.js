@@ -12,10 +12,7 @@ const WorkspaceSchema = new Schema({
 
 WorkspaceSchema.pre('save', true, function(next, done) {
   const self = this
-  mongoose.models['Workspace'].findOne({ teamId: self.teamId }, function (
-    err,
-    user,
-  ) {
+  mongoose.models['Workspace'].findOne({ teamId: self.teamId }, (err, user) => {
     if (err) {
       done(err)
     } else if (user) {
