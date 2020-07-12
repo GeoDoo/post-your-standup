@@ -2,23 +2,28 @@
 const fetch = require('node-fetch')
 const { btoa } = require('../utils')
 const { ACTIONS } = require('../constants')
+const { upsertWorkspace } = require('../db/models/Workspace')
 
 module.exports = app => async ({ ack, body, view, context }) => {
   ack()
 
-  // console.log("YAYAYAYAYAYAYAY", body);
-  // console.log(view.state.values);
   const jiraEmail = view.state.values.jira_email.email.value.trim()
   const jiraToken = view.state.values.jira_token.token.value.trim()
   const jiraProjectDomain = view.state.values.jira_domain.projectDomain.value.trim()
-
-  // console.log(jiraEmail, jiraToken, jiraProjectDomain);
-  // console.log(body);
-  // console.log(view);
+  const filter = { teamId: body.team.id }
+  const update = {
+    teamId: body.team.id,
+    domain: body.team.domain,
+    email: jiraEmail,
+    token: jiraToken,
+    project: jiraProjectDomain,
+  }
 
   try {
-    const token = btoa(process.env.JIRA_AUTH_USER, process.env.JIRA_API_TOKEN)
-    const results = await fetch(`${process.env.BASE_URL}/rest/api/2/project`, {
+    await upsertWorkspace(filter, update)
+
+    const token = btoa(jiraEmail, jiraToken)
+    const results = await fetch(`${jiraProjectDomain}/rest/api/2/project`, {
       headers: {
         Authorization: `Basic ${token}`,
       },

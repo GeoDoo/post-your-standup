@@ -6,6 +6,10 @@ const selectChannel = require('./actions/channel-selection')
 const selectProject = require('./actions/project-selection')
 const lala = require('./views/lala')
 const { EVENTS, ACTIONS, VIEWS, COMMANDS } = require('./constants')
+const { getConnection } = require('./db')
+
+const db = getConnection()
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 require('dotenv').config()
 

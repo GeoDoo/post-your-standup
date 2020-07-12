@@ -15,12 +15,15 @@
     "prod:stop:all": "pm2 delete all",
     "release": "semantic-release",
     "lint": "eslint .",
-    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md)\""
+    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md)\"",
+    "docker-dev": "docker-compose up",
+    "docker-prod": "docker-compose up -d"
   },
   "dependencies": {
     "@slack/bolt": "^2.1.1",
     "dotenv": "^8.2.0",
     "moment": "^2.27.0",
+    "mongoose": "^5.9.21",
     "node-fetch": "^2.6.0",
     "pm2": "^4.4.0",
     "sqlite3": "^5.0.0"
