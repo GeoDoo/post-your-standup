@@ -1,15 +1,7 @@
 const { ACTIONS } = require('../constants')
-const WorkspaceModel = require('../db/models/Workspaces')
 
 module.exports = app => async ({ event, context }) => {
   console.log(event, context)
-
-  const workspaceModel = new WorkspaceModel({ teamId: event.view.team_id })
-
-  workspaceModel.save(err => {
-    if (err) throw err
-    console.log('SAVE!')
-  })
 
   try {
     await app.client.views.publish({

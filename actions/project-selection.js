@@ -1,6 +1,7 @@
 const fetch = require('node-fetch')
 const { btoa } = require('../utils')
 const { ACTIONS } = require('../constants')
+const { findByTeamId } = require('../db/models/Workspace')
 
 module.exports = app => async ({ ack, body, context }) => {
   ack()
@@ -10,9 +11,11 @@ module.exports = app => async ({ ack, body, context }) => {
   const selectedProject = body.actions[0].selected_option.value // save to DB
 
   try {
-    const token = btoa(process.env.JIRA_AUTH_USER, process.env.JIRA_API_TOKEN)
+    const jiraUser = await findByTeamId(body.team.id)
+
+    const token = btoa(jiraUser.email, jiraUser.token)
     const results = await fetch(
-      `${process.env.BASE_URL}/rest/api/2/project/${selectedProject}/statuses`,
+      `${jiraUser.project}/rest/api/2/project/${selectedProject}/statuses`,
       {
         headers: {
           Authorization: `Basic ${token}`,
@@ -39,7 +42,7 @@ module.exports = app => async ({ ack, body, context }) => {
         value: status.name,
       }))
 
-    const resultss = await fetch(`${process.env.BASE_URL}/rest/api/2/project`, {
+    const resultss = await fetch(`${jiraUser.project}/rest/api/2/project`, {
       headers: {
         Authorization: `Basic ${token}`,
       },

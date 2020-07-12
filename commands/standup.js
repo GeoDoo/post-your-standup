@@ -1,9 +1,12 @@
 const fetch = require('node-fetch')
 const { formatIssues, today } = require('../helpers')
 const { btoa } = require('../utils')
+const { findByTeamId } = require('../db/models/Workspace')
 
 module.exports = app => async ({ ack, payload, context }) => {
   ack()
+
+  const jiraUser = await findByTeamId(payload.team_id)
 
   let additionalTasks
   const userText = payload.text.trim()
@@ -36,13 +39,12 @@ module.exports = app => async ({ ack, payload, context }) => {
       : ''
   }
 
-  const token = btoa(process.env.JIRA_AUTH_USER, process.env.JIRA_API_TOKEN)
-  // TODO: columns need to be user selected from Home settings
+  const token = btoa(jiraUser.email, jiraUser.token)
   const jql = `project=${process.env.PROJECT} AND assignee=currentuser() AND status IN ("Dev Prioritised")`
 
   try {
     const results = await fetch(
-      `${process.env.BASE_URL}/rest/api/2/search?jql=${jql}`,
+      `${jiraUser.project}/rest/api/2/search?jql=${jql}`,
       {
         headers: {
           Authorization: `Basic ${token}`,

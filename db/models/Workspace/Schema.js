@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-
 const Schema = mongoose.Schema
 
 const WorkspaceSchema = new Schema({
@@ -8,16 +7,31 @@ const WorkspaceSchema = new Schema({
     required: true,
     trim: true,
   },
+  domain: {
+    type: String,
+    trim: true,
+  },
+  email: {
+    type: String,
+    trim: true,
+  },
+  token: {
+    type: String,
+    trim: true,
+  },
+  project: {
+    type: String,
+    trim: true,
+  },
 })
 
 WorkspaceSchema.pre('save', true, function (next, done) {
-  const self = this
-  mongoose.models['Workspace'].findOne({ teamId: self.teamId }, (err, user) => {
+  mongoose.models['Workspace'].findOne({ teamId: this.teamId }, (err, user) => {
     if (err) {
       done(err)
     } else if (user) {
-      self.invalidate('teamId', 'teamId must be unique')
-      done(new Error('teamId must be unique'))
+      this.invalidate('teamId', 'teamId must be unique')
+      done()
     } else {
       done()
     }
