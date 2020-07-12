@@ -1,8 +1,6 @@
 const { ACTIONS } = require('../constants')
 
 module.exports = app => async ({ event, context }) => {
-  console.log(event, context)
-
   try {
     await app.client.views.publish({
       token: context.botToken,

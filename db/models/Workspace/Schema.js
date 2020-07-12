@@ -25,18 +25,4 @@ const WorkspaceSchema = new Schema({
   },
 })
 
-WorkspaceSchema.pre('save', true, function (next, done) {
-  mongoose.models['Workspace'].findOne({ teamId: this.teamId }, (err, user) => {
-    if (err) {
-      done(err)
-    } else if (user) {
-      this.invalidate('teamId', 'teamId must be unique')
-      done()
-    } else {
-      done()
-    }
-  })
-  next()
-})
-
 module.exports = mongoose.model('Workspace', WorkspaceSchema)
