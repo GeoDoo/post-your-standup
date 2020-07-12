@@ -9,7 +9,7 @@
     "test:unit": "jest unit --env=node --passWithNoTests",
     "test:unit:cov": "jest unit --env=node --passWithNoTests --coverage",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
-    "prod:start": "pm2 start server.js -i -1",
+    "prod:start": "pm2 start server.js -i -f -1",
     "prod:restart": "pm2 restart server.js -i -1",
     "prod:reload:all": "pm2 reload all",
     "prod:stop:all": "pm2 delete all",
@@ -25,8 +25,7 @@
     "moment": "^2.27.0",
     "mongoose": "^5.9.21",
     "node-fetch": "^2.6.0",
-    "pm2": "^4.4.0",
-    "sqlite3": "^5.0.0"
+    "pm2": "^4.4.0"
   },
   "engines": {
     "node": "12.x"
