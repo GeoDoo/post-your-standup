@@ -1,3 +1,5 @@
+require('module-alias/register')
+
 const expressApp = require('@root/app')
 
 ;(async () => {
