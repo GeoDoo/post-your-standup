@@ -22,6 +22,7 @@
   "dependencies": {
     "@slack/bolt": "^2.2.3",
     "dotenv": "^8.2.0",
+    "module-alias": "^2.2.2",
     "moment": "^2.27.0",
     "mongoose": "^5.9.27",
     "node-fetch": "^2.6.0",
@@ -78,5 +79,11 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@core": "./core",
+    "@db": "./db",
+    "@utils": "./utils"
   }
 }
