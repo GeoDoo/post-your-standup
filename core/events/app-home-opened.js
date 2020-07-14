@@ -1,4 +1,4 @@
-const { ACTIONS } = require('../constants')
+const { ACTIONS } = require('../../constants')
 
 module.exports = app => async ({ event, context }) => {
   try {

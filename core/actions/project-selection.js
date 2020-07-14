@@ -1,7 +1,7 @@
 const fetch = require('node-fetch')
-const { btoa } = require('../utils')
-const { ACTIONS } = require('../constants')
-const { findByTeamId } = require('../db/models/Workspace')
+const { btoa } = require('../../utils/encoding')
+const { ACTIONS } = require('../../constants')
+const { findByTeamId } = require('../../db/models/Workspace')
 
 module.exports = app => async ({ ack, body, context }) => {
   ack()

@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 const fetch = require('node-fetch')
-const { btoa } = require('../utils')
-const { ACTIONS } = require('../constants')
-const { upsertWorkspace } = require('../db/models/Workspace')
+const { btoa } = require('../../utils/encoding')
+const { ACTIONS } = require('../../constants')
+const { upsertWorkspace } = require('../../db/models/Workspace')
 
 module.exports = app => async ({ ack, body, view, context }) => {
   ack()
