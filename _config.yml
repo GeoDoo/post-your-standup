@@ -1,3 +1,5 @@
 theme: jekyll-theme-dinky
 baseurl: /post-your-standup
 include: ['CONTRIBUTING.md', 'LICENSE.md']
+plugins:
+  - jemoji
