@@ -1,4 +1,6 @@
-const expressApp = require('./app')
+require('module-alias/register')
+
+const expressApp = require('@root/app')
 
 ;(async () => {
   // Start your app

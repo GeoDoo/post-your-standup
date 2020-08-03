@@ -1,4 +1,4 @@
-const { today } = require('./helpers')
+const { today } = require('./formatters')
 
 jest.mock('moment', () => () =>
   jest.requireActual('moment')('2020-01-31T00:00:00.000Z'),

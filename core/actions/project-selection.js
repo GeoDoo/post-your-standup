@@ -1,44 +1,61 @@
-/* eslint-disable no-unused-vars */
 const fetch = require('node-fetch')
-const { btoa } = require('../utils')
-const { ACTIONS } = require('../constants')
-const { upsertWorkspace } = require('../db/models/Workspace')
+const { btoa } = require('@utils/encoding')
+const { ACTIONS } = require('@root/constants')
+const { findByTeamId } = require('@db/models/Workspace')
 
-module.exports = app => async ({ ack, body, view, context }) => {
+module.exports = app => async ({ ack, body, context }) => {
   ack()
 
-  const jiraEmail = view.state.values.jira_email.email.value.trim()
-  const jiraToken = view.state.values.jira_token.token.value.trim()
-  const jiraProjectDomain = view.state.values.jira_domain.projectDomain.value.trim()
-  const filter = { teamId: body.team.id }
-  const update = {
-    teamId: body.team.id,
-    domain: body.team.domain,
-    email: jiraEmail,
-    token: jiraToken,
-    project: jiraProjectDomain,
-  }
+  console.log('project:selection', body)
+
+  const selectedProject = body.actions[0].selected_option.value // save to DB
 
   try {
-    await upsertWorkspace(filter, update)
+    const jiraUser = await findByTeamId(body.team.id)
 
-    const token = btoa(jiraEmail, jiraToken)
-    const results = await fetch(`${jiraProjectDomain}/rest/api/2/project`, {
+    const token = btoa(jiraUser.email, jiraUser.token)
+    const results = await fetch(
+      `${jiraUser.project}/rest/api/2/project/${selectedProject}/statuses`,
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      },
+    )
+    const [statusesForSelectedProject] = await results.json()
+    const statusOptionsForSelectedProject = statusesForSelectedProject.statuses
+      .sort((a, b) => {
+        if (a.name < b.name) {
+          return -1
+        }
+        if (a.name > b.name) {
+          return 1
+        }
+        return 0
+      })
+      .map(status => ({
+        text: {
+          type: 'plain_text',
+          text: status.name,
+          emoji: true,
+        },
+        value: status.name,
+      }))
+
+    const resultss = await fetch(`${jiraUser.project}/rest/api/2/project`, {
       headers: {
         Authorization: `Basic ${token}`,
       },
     })
-    const projects = await results.json()
+    const projects = await resultss.json()
     const projectSelectOptions = projects
       .sort((a, b) => {
         if (a.name < b.name) {
           return -1
         }
-
         if (a.name > b.name) {
           return 1
         }
-
         return 0
       })
       .map(project => ({
@@ -49,7 +66,6 @@ module.exports = app => async ({ ack, body, view, context }) => {
         },
         value: project.key,
       }))
-
     const result = await app.client.conversations.list({
       token: process.env.SLACK_BOT_TOKEN,
       exclude_archived: true,
@@ -108,7 +124,7 @@ module.exports = app => async ({ ack, body, view, context }) => {
             text: {
               type: 'mrkdwn',
               text:
-                'Basic authentication has already been successfully set up. Congrats!\nIf you wish to change Jira account though, you can set a new one by clicking below:\n',
+                'Basic authentication has already been successfully set up. Congrats!\nIf you wish to change Jira account though, you can set a new one by clicking below\n',
             },
           },
           {
@@ -137,6 +153,7 @@ module.exports = app => async ({ ack, body, view, context }) => {
                   emoji: true,
                 },
                 options: allChannelsOptions,
+                // leave for reference, we ll need to show the initial value from the DB
                 // initial_option: {
                 //   text: {
                 //     type: "plain_text",
@@ -164,24 +181,24 @@ module.exports = app => async ({ ack, body, view, context }) => {
                 //   value: savedProject,
                 // },
               },
-              // {
-              //   type: "static_select",
-              //   action_id: "column:selection",
-              //   placeholder: {
-              //     type: "plain_text",
-              //     text: "Select a board column",
-              //     emoji: true
-              //   },
-              //   options: projectSelectOptions
-              //   // initial_option: {
-              //   //   text: {
-              //   //     type: "plain_text",
-              //   //     text: `${process.env.JIRA_AUTH_USER}`, // retrieve from DB
-              //   //     emoji: true
-              //   //   },
-              //   //   value: savedProject
-              //   // }
-              // },
+              {
+                type: 'static_select',
+                action_id: 'column:selection',
+                placeholder: {
+                  type: 'plain_text',
+                  text: 'Select a board column',
+                  emoji: true,
+                },
+                options: statusOptionsForSelectedProject,
+                // initial_option: {
+                //   text: {
+                //     type: "plain_text",
+                //     text: `${process.env.JIRA_AUTH_USER}`, // retrieve from DB
+                //     emoji: true
+                //   },
+                //   value: savedProject
+                // }
+              },
               {
                 type: 'button',
                 text: {
@@ -198,6 +215,6 @@ module.exports = app => async ({ ack, body, view, context }) => {
       },
     })
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
