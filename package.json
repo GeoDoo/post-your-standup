@@ -24,7 +24,7 @@
     "dotenv": "^8.2.0",
     "module-alias": "^2.2.2",
     "moment": "^2.27.0",
-    "mongoose": "^5.9.27",
+    "mongoose": "^5.9.28",
     "node-fetch": "^2.6.0",
     "pm2": "^4.4.0"
   },
