@@ -17,7 +17,9 @@
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md)\"",
     "docker-dev": "docker-compose up",
-    "docker-prod": "docker-compose up -d"
+    "docker-prod": "docker-compose up -d",
+    "admin:start": "webpack-dev-server --open --hot --mode development",
+    "admin:server:start": "nodemon admin/server"
   },
   "dependencies": {
     "@slack/bolt": "^2.2.3",
@@ -26,7 +28,13 @@
     "moment": "^2.27.0",
     "mongoose": "^5.9.28",
     "node-fetch": "^2.6.0",
-    "pm2": "^4.4.0"
+    "pm2": "^4.4.0",
+    "@apollo/client": "^3.1.2",
+    "apollo-server": "^2.16.1",
+    "graphql": "^15.3.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "uuid": "^8.3.0"
   },
   "engines": {
     "node": "12.x"
@@ -45,19 +53,35 @@
     "express"
   ],
   "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@testing-library/react": "^10.4.7",
+    "autoprefixer": "^9.8.5",
+    "babel-loader": "^8.1.0",
     "codecov": "^3.7.2",
     "commitizen": "^4.1.2",
+    "css-loader": "^4.1.1",
     "cz-conventional-changelog": "^3.2.0",
     "eslint": "^7.6.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.5",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
     "husky": "^4.2.5",
     "jest": "^26.3.0",
     "lint-staged": "^10.2.11",
     "nodemon": "^2.0.4",
+    "postcss-loader": "^3.0.0",
     "prettier": "^2.0.5",
-    "semantic-release": "^17.1.1"
+    "semantic-release": "^17.1.1",
+    "style-loader": "^1.2.1",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
   "config": {
     "commitizen": {

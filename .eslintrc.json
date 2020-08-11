@@ -4,10 +4,14 @@
     "es2020": true,
     "node": true
   },
-  "extends": ["prettier", "google"],
-  "plugins": ["prettier"],
+  "extends": ["prettier", "google", "plugin:react/recommended"],
+  "plugins": ["prettier", "react"],
   "parserOptions": {
-    "ecmaVersion": 11
+    "ecmaVersion": 11,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "rules": {
     "prettier/prettier": "error",

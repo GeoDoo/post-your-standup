@@ -1,15 +1,15 @@
 const WorkspaceModel = require('./Schema')
 
 const findByTeamId = async teamId => {
-  let jiraUser
-  await WorkspaceModel.findOne({ teamId }, function (err, workspace) {
-    jiraUser = {
+  return await WorkspaceModel.findOne({ teamId }, function (err, workspace) {
+    if (err) throw err
+
+    return {
       email: workspace.email,
       token: workspace.token,
       project: workspace.project,
     }
   })
-  return jiraUser
 }
 
 const upsertWorkspace = async (filter, update) => {
@@ -19,4 +19,12 @@ const upsertWorkspace = async (filter, update) => {
   })
 }
 
-module.exports = { findByTeamId, upsertWorkspace }
+const findAll = async () => {
+  return await WorkspaceModel.find({}, function (err, workspaces) {
+    if (err) throw err
+
+    return workspaces
+  })
+}
+
+module.exports = { findByTeamId, upsertWorkspace, findAll }
