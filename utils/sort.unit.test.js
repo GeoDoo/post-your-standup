@@ -12,11 +12,17 @@ describe('sortByName', () => {
       {
         name: 'Anne',
       },
+      {
+        name: 'George',
+      },
     ]
 
     expect(sortByName(array)).toEqual([
       {
         name: 'Anne',
+      },
+      {
+        name: 'George',
       },
       {
         name: 'George',
