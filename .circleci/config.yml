@@ -77,7 +77,7 @@ jobs:
             git fetch origin &&
             git reset --hard origin/master &&
             git pull &&
-            npm install && 
+            npm install --verbose && 
             npm run prod:start'
       - slack/status:
           failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
