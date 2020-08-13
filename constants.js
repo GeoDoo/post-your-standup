@@ -12,6 +12,7 @@ const ACTIONS = {
   OPEN_SETUP_JIRA_MODAL: 'open:setup:jira:modal',
   CHANNEL_SELECTION: 'channel:selection',
   PROJECT_SELECTION: 'project:selection',
+  BOARD_COLUMN: 'column:selection',
 }
 
 const VIEWS = {

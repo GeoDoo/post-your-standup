@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const fetch = require('node-fetch')
 const { btoa } = require('@utils/encoding')
 const { ACTIONS } = require('@root/constants')
