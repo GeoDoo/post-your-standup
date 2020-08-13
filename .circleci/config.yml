@@ -79,6 +79,7 @@ jobs:
             git pull &&
             npm install --verbose && 
             npm run prod:start'
+          no_output_timeout: 30m
       - slack/status:
           failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
           success_message: ':tada: $CIRCLE_JOB job has succeeded!'
