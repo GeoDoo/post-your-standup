@@ -1,4 +1,9 @@
 const { ACTIONS } = require('@root/constants')
+const {
+  getSectionBlock,
+  getDividerBlock,
+  getButtonBlock,
+} = require('@core/blocks')
 
 module.exports = app => async ({ event, context }) => {
   try {
@@ -9,57 +14,24 @@ module.exports = app => async ({ event, context }) => {
         type: 'home',
         callback_id: 'home_view',
         blocks: [
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: '*Welcome to your _Post Your Standup_ app*',
-            },
-          },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text:
-                'Our app enables teams to collaborate more efficiently by posting their standups for a Jira project to their dedicated channels.\nMake your project manager happy, team! :tada::tada::tada:\n',
-            },
-          },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: '\n',
-            },
-          },
-          {
-            type: 'divider',
-          },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: ':gear: *Settings*\n',
-            },
-          },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: 'Setup basic authentication for your Jira projects\n',
-            },
-          },
+          getSectionBlock('*Welcome to your _Post Your Standup_ app*'),
+          getSectionBlock(
+            'Our app enables teams to collaborate more efficiently by posting their standups for a Jira project to their dedicated channels.\nMake your project manager happy, team! :tada::tada::tada:\n',
+          ),
+          getSectionBlock('\n'),
+          getDividerBlock(),
+          getSectionBlock(':gear: *Settings*\n'),
+          getSectionBlock(
+            'Setup basic authentication for your Jira projects\n',
+          ),
           {
             type: 'actions',
             elements: [
-              {
-                type: 'button',
-                text: {
-                  type: 'plain_text',
-                  text: 'Authenticate me',
-                  emoji: true,
-                },
-                action_id: ACTIONS.OPEN_SETUP_JIRA_MODAL,
-              },
+              getButtonBlock(
+                'Authenticate me',
+                'authenticate_me',
+                ACTIONS.OPEN_SETUP_JIRA_MODAL,
+              ),
             ],
           },
         ],
