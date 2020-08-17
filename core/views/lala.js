@@ -1,8 +1,15 @@
-/* eslint-disable no-unused-vars */
 const fetch = require('node-fetch')
 const { btoa } = require('@utils/encoding')
 const { ACTIONS } = require('@root/constants')
+const { sortByName } = require('@utils/sort')
 const { upsertWorkspace } = require('@db/models/Workspace')
+const {
+  getSectionBlock,
+  getDividerBlock,
+  getButtonBlock,
+  getStaticSelectBlock,
+  getOptionBlock,
+} = require('@core/blocks')
 
 module.exports = app => async ({ ack, body, view, context }) => {
   ack()
@@ -29,40 +36,18 @@ module.exports = app => async ({ ack, body, view, context }) => {
       },
     })
     const projects = await results.json()
-    const projectSelectOptions = projects
-      .sort((a, b) => {
-        if (a.name < b.name) {
-          return -1
-        }
-
-        if (a.name > b.name) {
-          return 1
-        }
-
-        return 0
-      })
-      .map(project => ({
-        text: {
-          type: 'plain_text',
-          text: `${project.name} (${project.key})`,
-          emoji: true,
-        },
-        value: project.key,
-      }))
+    const projectSelectOptions = sortByName(projects).map(project =>
+      getOptionBlock(`${project.name} (${project.key})`, project.key),
+    )
 
     const result = await app.client.conversations.list({
       token: process.env.SLACK_BOT_TOKEN,
       exclude_archived: true,
       types: 'public_channel,private_channel', // magic
     })
-    const allChannelsOptions = result.channels.map(channel => ({
-      text: {
-        type: 'plain_text',
-        text: channel.name,
-        emoji: true,
-      },
-      value: channel.name,
-    }))
+    const allChannelsOptions = result.channels.map(channel =>
+      getOptionBlock(channel.name, channel.name),
+    )
 
     await app.client.views.publish({
       token: context.botToken,
@@ -71,127 +56,44 @@ module.exports = app => async ({ ack, body, view, context }) => {
         type: 'home',
         callback_id: 'home_view',
         blocks: [
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: '*Welcome to your _Post Your Standup_ app*',
-            },
-          },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text:
-                'Our app enables teams to collaborate more efficiently by posting their standups for a Jira project to their dedicated channels.\nMake your project manager happy, team! :tada::tada::tada:\n',
-            },
-          },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: '\n',
-            },
-          },
-          {
-            type: 'divider',
-          },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: ':gear: *Settings*\n',
-            },
-          },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text:
-                'Basic authentication has already been successfully set up. Congrats!\nIf you wish to change Jira account though, you can set a new one by clicking below:\n',
-            },
-          },
+          getSectionBlock('*Welcome to your _Post Your Standup_ app*'),
+          getSectionBlock(
+            'Our app enables teams to collaborate more efficiently by posting their standups for a Jira project to their dedicated channels.\nMake your project manager happy, team! :tada::tada::tada:\n',
+          ),
+          getSectionBlock('\n'),
+          getDividerBlock(),
+          getSectionBlock(':gear: *Settings*\n'),
+          getSectionBlock(
+            'Basic authentication has already been successfully set up. Congrats!\nIf you wish to change Jira account though, you can set a new one by clicking below:\n',
+          ),
           {
             type: 'actions',
             elements: [
-              {
-                type: 'button',
-                text: {
-                  type: 'plain_text',
-                  text: 'Change Jira account',
-                  emoji: true,
-                },
-                action_id: ACTIONS.OPEN_SETUP_JIRA_MODAL,
-              },
+              getButtonBlock(
+                'Change Jira account',
+                'change_jira_account',
+                ACTIONS.OPEN_SETUP_JIRA_MODAL,
+              ),
             ],
           },
           {
             type: 'actions',
             elements: [
-              {
-                type: 'static_select',
-                action_id: ACTIONS.CHANNEL_SELECTION,
-                placeholder: {
-                  type: 'plain_text',
-                  text: 'Select a channel',
-                  emoji: true,
-                },
-                options: allChannelsOptions,
-                // initial_option: {
-                //   text: {
-                //     type: "plain_text",
-                //     text: `${process.env.JIRA_AUTH_USER}`, // retrieve from DB
-                //     emoji: true
-                //   },
-                //   value: savedProject
-                // }
-              },
-              {
-                type: 'static_select',
-                action_id: ACTIONS.PROJECT_SELECTION,
-                placeholder: {
-                  type: 'plain_text',
-                  text: 'Select your project',
-                  emoji: true,
-                },
-                options: projectSelectOptions,
-                // initial_option: {
-                //   text: {
-                //     type: "plain_text",
-                //     text: `${process.env.JIRA_AUTH_USER}`, // retrieve from DB
-                //     emoji: true,
-                //   },
-                //   value: savedProject,
-                // },
-              },
-              // {
-              //   type: "static_select",
-              //   action_id: "column:selection",
-              //   placeholder: {
-              //     type: "plain_text",
-              //     text: "Select a board column",
-              //     emoji: true
-              //   },
-              //   options: projectSelectOptions
-              //   // initial_option: {
-              //   //   text: {
-              //   //     type: "plain_text",
-              //   //     text: `${process.env.JIRA_AUTH_USER}`, // retrieve from DB
-              //   //     emoji: true
-              //   //   },
-              //   //   value: savedProject
-              //   // }
-              // },
-              {
-                type: 'button',
-                text: {
-                  type: 'plain_text',
-                  text: 'Add another',
-                  emoji: true,
-                },
-                value: 'add_another_project_to_channel',
-                action_id: 'add:project_to_channel',
-              },
+              getStaticSelectBlock(
+                ACTIONS.CHANNEL_SELECTION,
+                'Select a channel',
+                allChannelsOptions,
+              ),
+              getStaticSelectBlock(
+                ACTIONS.PROJECT_SELECTION,
+                'Select your project',
+                projectSelectOptions,
+              ),
+              getButtonBlock(
+                'Add another',
+                'add_another_project_to_channel',
+                'add:project_to_channel',
+              ),
             ],
           },
         ],

@@ -2,6 +2,7 @@ const fetch = require('node-fetch')
 const { formatIssues, today } = require('@utils/formatters')
 const { btoa } = require('@utils/encoding')
 const { findByTeamId } = require('@db/models/Workspace')
+const { getSectionBlock } = require('@core/blocks')
 
 module.exports = app => async ({ ack, payload, context }) => {
   ack()
@@ -17,16 +18,10 @@ module.exports = app => async ({ ack, payload, context }) => {
         token: context.botToken,
         channel: payload.channel_id,
         blocks: [
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text:
-                '> This app is relatively easy to use. Just hit the command.\n _For example:_ `/standup`',
-            },
-          },
+          getSectionBlock(
+            '> This app is relatively easy to use. Just hit the command.\n _For example:_ `/standup`',
+          ),
         ],
-        text: 'Message from Post Your Standup App',
       })
     } catch (error) {
       console.log(error)
@@ -53,44 +48,22 @@ module.exports = app => async ({ ack, payload, context }) => {
     )
     const { issues } = await results.json()
     const blocks = [
-      {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: `> *@${payload.user_name}'s standup for today, ${today()}*`,
-        },
-      },
-      {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: 'Jira tickets currently working on:',
-        },
-      },
-      {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: `${formatIssues(issues.slice(0, 16))}`, // limit to 16 issues = 2845 chars, due to invalid_blocks error: max length 3001 chars
-        },
-      },
+      getSectionBlock(
+        `> *@${payload.user_name}'s standup for today, ${today()}*`,
+      ),
+      getSectionBlock('Jira tickets currently working on:'),
+      // limit to 16 issues = 2845 chars, due to invalid_blocks error: max length 3001 chars
+      getSectionBlock(`${formatIssues(issues.slice(0, 16), jiraUser.project)}`),
     ]
 
     if (additionalTasks) {
-      blocks.push({
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: `Additional tasks:\n${additionalTasks}`,
-        },
-      })
+      blocks.push(getSectionBlock(`Additional tasks:\n${additionalTasks}`))
     }
 
     await app.client.chat.postMessage({
       token: context.botToken,
       channel: payload.channel_id,
       blocks,
-      text: 'Message from Post Your Standup App',
     })
   } catch (error) {
     console.log(error)
