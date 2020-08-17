@@ -71,7 +71,7 @@ module.exports = app => async ({ ack, payload, context }) => {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `${formatIssues(issues.slice(0, 16))}`, // limit to 16 issues = 2845 chars, due to invalid_blocks error: max length 3001 chars
+          text: `${formatIssues(issues.slice(0, 16), jiraUser.project)}`, // limit to 16 issues = 2845 chars, due to invalid_blocks error: max length 3001 chars
         },
       },
     ]

@@ -3,7 +3,7 @@
 exports[`Helpers formatIssues should provide standup issues in a nice format 1`] = `
 "1.  summary
 
-      Link: undefined/browse/key
+      Link: https://test.atlassian.net/browse/key
 
       Status: *undefined*
 

@@ -24,8 +24,9 @@ describe('Helpers', () => {
           },
         },
       ]
+      const projectUrl = 'https://test.atlassian.net'
 
-      expect(formatIssues(data)).toMatchSnapshot()
+      expect(formatIssues(data, projectUrl)).toMatchSnapshot()
     })
 
     it('should provide useful feedback when no issues found', () => {
