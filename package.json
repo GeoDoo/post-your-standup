@@ -22,7 +22,7 @@
     "admin:server:start": "nodemon admin/server"
   },
   "dependencies": {
-    "@slack/bolt": "^2.2.3",
+    "@slack/bolt": "^2.3.0",
     "dotenv": "^8.2.0",
     "module-alias": "^2.2.2",
     "moment": "^2.27.0",
