@@ -60,7 +60,7 @@
     "autoprefixer": "^9.8.5",
     "babel-loader": "^8.1.0",
     "codecov": "^3.7.2",
-    "commitizen": "^4.2.0",
+    "commitizen": "^4.2.1",
     "css-loader": "^4.2.2",
     "cz-conventional-changelog": "^3.2.1",
     "eslint": "^7.7.0",
