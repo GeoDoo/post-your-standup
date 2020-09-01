@@ -1,4 +1,7 @@
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer, gql, AuthenticationError } = require('apollo-server')
+const jsonwebtoken = require('jsonwebtoken')
+const jwksClient = require('jwks-rsa')
+
 require('dotenv').config()
 
 const { getConnection } = require('../../db')
@@ -21,12 +24,57 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    workspaces: async () => await findAll(),
+    workspaces: async (_parent, _args, context) => {
+      try {
+        await context.user
+
+        return await findAll()
+      } catch (e) {
+        throw new AuthenticationError(e)
+      }
+    },
   },
 }
 
-const server = new ApolloServer({ typeDefs, resolvers })
+const client = jwksClient({
+  jwksUri: `https://${process.env.AUTH_DOMAIN}/.well-known/jwks.json`,
+})
 
-server.listen({ port: config.server.port }).then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`)
+const getKey = (header, cb) => {
+  client.getSigningKey(header.kid, (_err, key) => {
+    const signingKey = key.publicKey || key.rsaPublicKey
+
+    cb(null, signingKey)
+  })
+}
+
+const options = {
+  audience: process.env.AUTH_AUDIENCE,
+  issuer: `https://${process.env.AUTH_DOMAIN}/`,
+  algorithms: ['RS256'],
+}
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => {
+    const jwt = req.headers.authorization
+    const user = new Promise((resolve, reject) =>
+      jsonwebtoken.verify(jwt, getKey, options, (err, decoded) => {
+        if (err) {
+          return reject(err)
+        }
+
+        resolve(decoded)
+      }),
+    )
+
+    return {
+      user,
+    }
+  },
+})
+
+server.listen(config.server.port).then(({ url }) => {
+  console.log(`🚀 Dashboard API ready at ${url}`)
 })

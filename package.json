@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "description": "An interactive Slack app to help you post your standup based on your Jira boards",
-  "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
     "test:unit": "jest unit --env=node --passWithNoTests",
@@ -22,16 +21,20 @@
     "admin:server:start": "nodemon admin/server"
   },
   "dependencies": {
+    "@apollo/client": "^3.1.4",
+    "@auth0/auth0-react": "^1.0.0",
     "@slack/bolt": "^2.3.0",
+    "apollo-server": "^2.17.0",
     "dotenv": "^8.2.0",
+    "express-jwt": "^6.0.0",
+    "graphql": "^15.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^1.9.0",
     "module-alias": "^2.2.2",
     "moment": "^2.27.0",
     "mongoose": "^5.10.2",
     "node-fetch": "^2.6.0",
     "pm2": "^4.4.1",
-    "@apollo/client": "^3.1.4",
-    "apollo-server": "^2.17.0",
-    "graphql": "^15.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "uuid": "^8.3.0"
