@@ -1,6 +1,9 @@
 const path = require('path')
+const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+require('dotenv').config()
 
 module.exports = {
   mode: 'development',
@@ -56,5 +59,11 @@ module.exports = {
       filename: 'index.html',
       inject: 'body',
     }),
+    new webpack.DefinePlugin({
+      'process.env.AUTH_AUDIENCE': JSON.stringify(process.env.AUTH_AUDIENCE),
+      'process.env.AUTH_DOMAIN': JSON.stringify(process.env.AUTH_DOMAIN),
+      'process.env.AUTH_CLIENT_ID': JSON.stringify(process.env.AUTH_CLIENT_ID),
+    }),
   ],
+  devtool: 'source-map',
 }

@@ -6,7 +6,7 @@ const selectChannel = require('@core/actions/channel-selection')
 const selectProject = require('@core/actions/project-selection')
 const lala = require('@core/views/lala')
 const { EVENTS, ACTIONS, VIEWS, COMMANDS } = require('@root/constants')
-const { getConnection } = require('@root/db')
+const { getConnection } = require('@db')
 
 const db = getConnection()
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
