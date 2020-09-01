@@ -1,19 +1,15 @@
 import React from 'react'
 
-import Workspaces from './Workspaces'
-import UserMenu from './components/UserMenu'
-import withAuth from './hocs/withAuth'
+import Dashboard from './pages/Dashboard'
 
 import './App.pcss'
 
 const App = () => {
   return (
     <div>
-      <UserMenu />
-      <h1>Dashboard</h1>
-      <Workspaces />
+      <Dashboard />
     </div>
   )
 }
 
-export default withAuth(App)
+export default App
