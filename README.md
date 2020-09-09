@@ -16,4 +16,4 @@ development etc.
 
 ---
 
-This work is licensed under the [GPL-3.0 License](LICENSE.md).
+This work is licensed under the [GNU LESSER GENERAL PUBLIC LICENSE](LICENSE).
