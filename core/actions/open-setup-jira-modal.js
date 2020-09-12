@@ -47,9 +47,9 @@ module.exports = app => async ({ ack, body, context }) => {
           getInputBlock(
             'jira_domain',
             'projectDomain',
-            "Your company's Jira domain",
+            "Your company's Jira full domain",
             'Domain',
-            'Example: myproject from https://myproject.atlassian.net/',
+            'Example: https://myproject.atlassian.net/',
           ),
           getDividerBlock(),
           getSectionBlock(
