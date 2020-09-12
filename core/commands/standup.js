@@ -8,9 +8,21 @@ module.exports = app => async ({ ack, payload, context }) => {
   ack()
 
   const jiraUser = await findByTeamId(payload.team_id)
-
-  let additionalTasks
   const userText = payload.text.trim()
+
+  if (!userText) {
+    try {
+      return await app.client.chat.postEphemeral({
+        token: context.botToken,
+        channel: payload.channel_id,
+        text: ':thinking_face: did you forget to type the key of your project?',
+        user: payload.user_id,
+      })
+    } catch (error) {
+      console.log(error)
+      return
+    }
+  }
 
   if (userText && userText === 'help') {
     try {
@@ -19,7 +31,7 @@ module.exports = app => async ({ ack, payload, context }) => {
         channel: payload.channel_id,
         blocks: [
           getSectionBlock(
-            '> This app is relatively easy to use. Just hit the command.\n _For example:_ `/standup`',
+            "> This app is relatively easy to use.\n You will need to type `/standup`, leave a space and then the key of the project you want to post from. The key is usually the first part of any ticket's name. _For example_: Given you have tickets like DSUS-14, DSUS-567, then you will need to type: `/standup DSUS`",
           ),
         ],
       })
@@ -27,15 +39,10 @@ module.exports = app => async ({ ack, payload, context }) => {
       console.log(error)
       return
     }
-  } else {
-    const tasks = userText ? userText.split(',').map(task => task.trim()) : []
-    additionalTasks = tasks.length
-      ? tasks.map(task => `•  ${task}\n`).join('')
-      : ''
   }
 
   const token = btoa(jiraUser.email, jiraUser.token)
-  const jql = `project=${process.env.PROJECT} AND assignee=currentuser() AND status IN ("Dev Prioritised")`
+  const jql = `project=${userText} AND assignee=currentuser()`
 
   try {
     const results = await fetch(
@@ -46,6 +53,16 @@ module.exports = app => async ({ ack, payload, context }) => {
         },
       },
     )
+
+    if (results.status === 400) {
+      return await app.client.chat.postEphemeral({
+        token: context.botToken,
+        channel: payload.channel_id,
+        text: ':thinking_face: Are you sure you typed the correct project key?',
+        user: payload.user_id,
+      })
+    }
+
     const { issues } = await results.json()
     const blocks = [
       getSectionBlock(
@@ -56,10 +73,6 @@ module.exports = app => async ({ ack, payload, context }) => {
       getSectionBlock(`${formatIssues(issues.slice(0, 16), jiraUser.project)}`),
     ]
 
-    if (additionalTasks) {
-      blocks.push(getSectionBlock(`Additional tasks:\n${additionalTasks}`))
-    }
-
     await app.client.chat.postMessage({
       token: context.botToken,
       channel: payload.channel_id,
@@ -67,6 +80,5 @@ module.exports = app => async ({ ack, payload, context }) => {
     })
   } catch (error) {
     console.log(error)
-    console.log(error.data.response_metadata.messages)
   }
 }
