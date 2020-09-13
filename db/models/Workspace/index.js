@@ -4,11 +4,15 @@ const findByTeamId = async teamId => {
   return await WorkspaceModel.findOne({ teamId }, function (err, workspace) {
     if (err) throw err
 
-    return {
-      email: workspace.email,
-      token: workspace.token,
-      project: workspace.project,
+    if (workspace) {
+      return {
+        email: workspace.email,
+        token: workspace.token,
+        project: workspace.project,
+      }
     }
+
+    return null
   })
 }
 

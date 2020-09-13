@@ -1,10 +1,8 @@
 const { App, ExpressReceiver } = require('@slack/bolt')
-const standup = require('@core/commands/standup')
-const onAppHomeOpened = require('@core/events/app-home-opened')
-const setupJira = require('@core/actions/open-setup-jira-modal')
-const selectChannel = require('@core/actions/channel-selection')
-const selectProject = require('@core/actions/project-selection')
-const authenticated = require('@core/views/authenticated')
+const standup = require('@core/chat/commands/standup')
+const home = require('@core/views/home')
+const setupJira = require('@core/views/modals/setup-jira')
+const homeAuthenticated = require('@core/views/home_authenticated')
 const { EVENTS, ACTIONS, VIEWS, COMMANDS } = require('@root/constants')
 const { getConnection } = require('@db')
 
@@ -26,12 +24,10 @@ const expressApp = expressReceiver.app
 
 app.command(COMMANDS.STANDUP, standup(app))
 
-app.event(EVENTS.APP_HOME_VIEWED, onAppHomeOpened(app))
+app.event(EVENTS.APP_HOME_VIEWED, home(app))
 
 app.action(ACTIONS.OPEN_SETUP_JIRA_MODAL, setupJira(app))
-app.action(ACTIONS.CHANNEL_SELECTION, selectChannel(app))
-app.action(ACTIONS.PROJECT_SELECTION, selectProject(app))
 
-app.view(VIEWS.AUTHENTICATED_VIEW, authenticated(app))
+app.view(VIEWS.HOME_AUTHENTICATED_VIEW, homeAuthenticated(app))
 
 module.exports = expressApp
