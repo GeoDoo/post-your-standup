@@ -9,14 +9,12 @@ const EVENTS = {
 }
 
 const ACTIONS = {
-  OPEN_SETUP_JIRA_MODAL: 'open:setup:jira:modal',
-  CHANNEL_SELECTION: 'channel:selection',
-  PROJECT_SELECTION: 'project:selection',
-  BOARD_COLUMN: 'column:selection',
+  OPEN_SETUP_JIRA_MODAL: 'open_setup_jira_modal',
 }
 
 const VIEWS = {
-  AUTHENTICATED_VIEW: 'authenticated_view',
+  HOME_VIEW: 'home_view',
+  HOME_AUTHENTICATED_VIEW: 'authenticated_view',
 }
 
 module.exports = {

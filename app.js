@@ -2,7 +2,7 @@ const { App, ExpressReceiver } = require('@slack/bolt')
 const standup = require('@core/chat/commands/standup')
 const home = require('@core/views/home')
 const setupJira = require('@core/views/modals/setup-jira')
-const authenticated = require('@core/views/authenticated')
+const homeAuthenticated = require('@core/views/home_authenticated')
 const { EVENTS, ACTIONS, VIEWS, COMMANDS } = require('@root/constants')
 const { getConnection } = require('@db')
 
@@ -28,6 +28,6 @@ app.event(EVENTS.APP_HOME_VIEWED, home(app))
 
 app.action(ACTIONS.OPEN_SETUP_JIRA_MODAL, setupJira(app))
 
-app.view(VIEWS.AUTHENTICATED_VIEW, authenticated(app))
+app.view(VIEWS.HOME_AUTHENTICATED_VIEW, homeAuthenticated(app))
 
 module.exports = expressApp

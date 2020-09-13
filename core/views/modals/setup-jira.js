@@ -1,3 +1,4 @@
+const { VIEWS } = require('@root/constants')
 const {
   getPlainTextBlock,
   getSectionBlock,
@@ -14,7 +15,7 @@ module.exports = app => async ({ ack, body, context }) => {
       trigger_id: body.trigger_id,
       view: {
         type: 'modal',
-        callback_id: 'authenticate_me_view',
+        callback_id: VIEWS.HOME_AUTHENTICATED_VIEW,
         title: getPlainTextBlock('Setup Jira REST API'),
         submit: getPlainTextBlock('Submit'),
         blocks: [
