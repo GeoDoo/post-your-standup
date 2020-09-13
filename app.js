@@ -4,7 +4,7 @@ const onAppHomeOpened = require('@core/events/app-home-opened')
 const setupJira = require('@core/actions/open-setup-jira-modal')
 const selectChannel = require('@core/actions/channel-selection')
 const selectProject = require('@core/actions/project-selection')
-const lala = require('@core/views/lala')
+const authenticated = require('@core/views/authenticated')
 const { EVENTS, ACTIONS, VIEWS, COMMANDS } = require('@root/constants')
 const { getConnection } = require('@db')
 
@@ -32,6 +32,6 @@ app.action(ACTIONS.OPEN_SETUP_JIRA_MODAL, setupJira(app))
 app.action(ACTIONS.CHANNEL_SELECTION, selectChannel(app))
 app.action(ACTIONS.PROJECT_SELECTION, selectProject(app))
 
-app.view(VIEWS.LALA_VIEW, lala(app))
+app.view(VIEWS.LALA_VIEW, authenticated(app))
 
 module.exports = expressApp
