@@ -1,4 +1,5 @@
 const {
+  getPlainTextBlock,
   getSectionBlock,
   getDividerBlock,
   getInputBlock,
@@ -13,15 +14,9 @@ module.exports = app => async ({ ack, body, context }) => {
       trigger_id: body.trigger_id,
       view: {
         type: 'modal',
-        callback_id: 'authenticated_view',
-        title: {
-          type: 'plain_text',
-          text: 'Setup Jira REST API',
-        },
-        submit: {
-          type: 'plain_text',
-          text: 'Submit',
-        },
+        callback_id: 'authenticate_me_view',
+        title: getPlainTextBlock('Setup Jira REST API'),
+        submit: getPlainTextBlock('Submit'),
         blocks: [
           getSectionBlock(
             'This app needs a valid Jira account to access your data from your Jira projects. Please provide us with one below:',
@@ -53,7 +48,7 @@ module.exports = app => async ({ ack, body, context }) => {
           ),
           getDividerBlock(),
           getSectionBlock(
-            '*IMPORTANT NOTICE:* For security reasons, you will not be able to access this modal after you click submit! If you want to change anything in the future, you will need to enter everything anew.',
+            '*IMPORTANT NOTICE:* For security reasons, you will not be able to access the account details you entered after you click submit! If you want to change anything in the future, you will need to enter everything anew. Finally, we do not use your data for any other reason than to connect this app with your Jira boards :slightly_smiling_face:',
           ),
         ],
       },

@@ -16,7 +16,7 @@ module.exports = app => async ({ event, context }) => {
         blocks: [
           getSectionBlock('*Welcome to your _Post Your Standup_ app*'),
           getSectionBlock(
-            'Our app enables teams to collaborate more efficiently by posting their standups for a Jira project to their dedicated channels.\nMake your project manager happy, team! :tada::tada::tada:\n',
+            "Our app enables teams to collaborate more efficiently by posting their stand-ups for their Jira projects to their dedicated channels.\nEspecially when you work remotely, sometimes it is tedious to open Jira and go through all members' tickets and start explaining what you did etc.\nNow, you can post your tickets on the channel and argue about them in one place!\nMake your project manager happy, team!\n",
           ),
           getSectionBlock('\n'),
           getDividerBlock(),

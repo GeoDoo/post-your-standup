@@ -109,6 +109,7 @@
   },
   "_moduleAliases": {
     "@root": ".",
+    "@admin": "./admin",
     "@core": "./core",
     "@db": "./db",
     "@utils": "./utils"
