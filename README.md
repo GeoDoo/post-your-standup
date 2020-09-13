@@ -4,7 +4,6 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 ![GitHub issues](https://img.shields.io/github/issues-raw/GeoDoo/post-your-standup)
 ![GitHub contributors](https://img.shields.io/github/contributors/GeoDoo/post-your-standup)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/GeoDoo/post-your-standup)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/GeoDoo/post-your-standup)
 
 ### Contributing
