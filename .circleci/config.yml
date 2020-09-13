@@ -78,7 +78,8 @@ jobs:
             git reset --hard origin/master &&
             git pull &&
             npm install --verbose && 
-            npm run prod:start'
+            npm run prod:start &&
+            npm run prod:reload:all'
           no_output_timeout: 30m
       - slack/status:
           failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
