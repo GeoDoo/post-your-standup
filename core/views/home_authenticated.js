@@ -1,4 +1,4 @@
-const { ACTIONS, VIEWS } = require('@root/constants')
+const { ACTIONS, VIEWS, TEXT } = require('@root/constants')
 const {
   getSectionBlock,
   getDividerBlock,
@@ -31,25 +31,19 @@ module.exports = app => async ({ ack, body, view, context }) => {
         type: 'home',
         callback_id: VIEWS.HOME_VIEW,
         blocks: [
-          getSectionBlock('*Welcome to your _Post Your Standup_ app*'),
-          getSectionBlock(
-            "Our app enables teams to collaborate more efficiently by posting their stand-ups for their Jira projects to their dedicated channels.\nEspecially when you work remotely, sometimes it is tedious to open Jira and go through all members' tickets and start explaining what you did etc.\nNow, you can post your tickets on the channel and argue about them in one place!\nMake your project manager happy, team!\n",
-          ),
+          getSectionBlock(TEXT.HOME.TITLE),
+          getSectionBlock(TEXT.HOME.INTRO),
           getSectionBlock('\n'),
           getDividerBlock(),
-          getSectionBlock(':gear: *Settings*\n'),
-          getSectionBlock(
-            'Basic authentication has already been successfully set up :tada:\n',
-          ),
+          getSectionBlock(TEXT.HOME.SETTINGS.TITLE),
+          getSectionBlock(TEXT.HOME.SETTINGS.AUTHENTICATION_SUCCESS_MESSAGE),
           getSectionBlock('\n'),
-          getSectionBlock(
-            'If you wish to change Jira account though, you can set a new one by clicking below:\n',
-          ),
+          getSectionBlock(TEXT.HOME.SETTINGS.CHANGE_ACCOUNT),
           {
             type: 'actions',
             elements: [
               getButtonBlock(
-                'Change Jira account',
+                TEXT.BUTTONS.CHANGE_ACCOUNT,
                 'change_jira_account',
                 ACTIONS.OPEN_SETUP_JIRA_MODAL,
               ),

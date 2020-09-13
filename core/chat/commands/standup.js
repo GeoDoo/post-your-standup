@@ -7,44 +7,45 @@ const { getSectionBlock } = require('@core/blocks')
 module.exports = app => async ({ ack, payload, context }) => {
   ack()
 
-  const jiraUser = await findByTeamId(payload.team_id)
-  const userText = payload.text.trim()
-
-  if (!userText) {
-    try {
-      return await app.client.chat.postEphemeral({
-        token: context.botToken,
-        channel: payload.channel_id,
-        text: ':thinking_face: did you forget to type the key of your project?',
-        user: payload.user_id,
-      })
-    } catch (error) {
-      console.log(error)
-      return
-    }
-  }
-
-  if (userText && userText === 'help') {
-    try {
-      return await app.client.chat.postMessage({
-        token: context.botToken,
-        channel: payload.channel_id,
-        blocks: [
-          getSectionBlock(
-            "> This app is relatively easy to use.\n You will need to type `/standup`, leave a space and then the key of the project you want to post from. The key is usually the first part of any ticket's name. _For example_: Given you have tickets like DSUS-14, DSUS-567, then you will need to type: `/standup DSUS`",
-          ),
-        ],
-      })
-    } catch (error) {
-      console.log(error)
-      return
-    }
-  }
-
-  const token = btoa(jiraUser.email, jiraUser.token)
-  const jql = `project=${userText} AND assignee=currentuser()`
-
   try {
+    const jiraUser = await findByTeamId(payload.team_id)
+    const userText = payload.text.trim()
+
+    if (!userText) {
+      try {
+        return await app.client.chat.postEphemeral({
+          token: context.botToken,
+          channel: payload.channel_id,
+          text:
+            ':thinking_face: did you forget to type the key of your project?',
+          user: payload.user_id,
+        })
+      } catch (error) {
+        console.log(error)
+        return
+      }
+    }
+
+    if (userText && userText === 'help') {
+      try {
+        return await app.client.chat.postMessage({
+          token: context.botToken,
+          channel: payload.channel_id,
+          blocks: [
+            getSectionBlock(
+              "> This app is relatively easy to use.\n You will need to type `/standup`, leave a space and then the key of the project you want to post from. The key is usually the first part of any ticket's name. _For example_: Given you have tickets like DSUS-14, DSUS-567, then you will need to type: `/standup DSUS`",
+            ),
+          ],
+        })
+      } catch (error) {
+        console.log(error)
+        return
+      }
+    }
+
+    const token = btoa(jiraUser.email, jiraUser.token)
+    const jql = `project=${userText} AND assignee=currentuser()`
+
     const results = await fetch(
       `${jiraUser.project}/rest/api/2/search?jql=${jql}`,
       {
