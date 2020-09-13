@@ -32,6 +32,6 @@ app.action(ACTIONS.OPEN_SETUP_JIRA_MODAL, setupJira(app))
 app.action(ACTIONS.CHANNEL_SELECTION, selectChannel(app))
 app.action(ACTIONS.PROJECT_SELECTION, selectProject(app))
 
-app.view(VIEWS.LALA_VIEW, authenticated(app))
+app.view(VIEWS.AUTHENTICATED_VIEW, authenticated(app))
 
 module.exports = expressApp

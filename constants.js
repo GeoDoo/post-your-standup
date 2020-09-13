@@ -16,7 +16,7 @@ const ACTIONS = {
 }
 
 const VIEWS = {
-  LALA_VIEW: 'lala_view',
+  AUTHENTICATED_VIEW: 'authenticated_view',
 }
 
 module.exports = {

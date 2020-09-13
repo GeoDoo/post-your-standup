@@ -13,7 +13,7 @@ module.exports = app => async ({ ack, body, context }) => {
       trigger_id: body.trigger_id,
       view: {
         type: 'modal',
-        callback_id: 'lala_view',
+        callback_id: 'authenticated_view',
         title: {
           type: 'plain_text',
           text: 'Setup Jira REST API',
