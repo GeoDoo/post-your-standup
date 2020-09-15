@@ -12,14 +12,15 @@
 
 If you are interested to contribute to our project, you can find a more
 comprehensive guide on how you can do that in our
-[contributing section](CONTRIBUTING.md). 
+[contributing section](CONTRIBUTING.md).
 
-In general, we try to follow Basecamp, described here: https://basecamp.com/shapeup/webbook.
+In general, we try to follow Basecamp, described here:
+[Shape Up](https://basecamp.com/shapeup/webbook).
 
 ### Issues
 
-Please create an issue if you have any problems using the app or want to ask a question about
-development or feature etc.
+Please create an issue if you have any problems using the app or want to ask a
+question about development or feature etc.
 
 ---
 
