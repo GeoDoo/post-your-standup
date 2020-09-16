@@ -70,6 +70,6 @@ module.exports = app => async ({ event, context }) => {
       })
     }
   } catch (error) {
-    console.error(error.data.response_metadata)
+    console.error(error)
   }
 }
