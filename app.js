@@ -15,38 +15,43 @@ require('dotenv').config()
 
 const expressReceiver = new ExpressReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
-  clientId: process.env.SLACK_CLIENT_ID,
-  clientSecret: process.env.SLACK_CLIENT_SECRET,
-  stateSecret: uuidv4(),
-  scopes: [
-    'channels:read',
-    'chat:write',
-    'commands',
-    'groups:read',
-    'incoming-webhook',
-  ],
-  installationStore: {
-    storeInstallation: async installation => {
-      try {
-        return await storeInstallation(installation.team.id, installation)
-      } catch (e) {
-        console.log(e)
-      }
-    },
-    fetchInstallation: async ({ teamId }) => {
-      try {
-        const { installation } = await fetchInstallation(teamId)
-        return installation
-      } catch (e) {
-        console.log(e)
-      }
-    },
-  },
 })
 
-const app = new App({
-  receiver: expressReceiver,
-})
+const app = process.env.LOCAL_DEV
+  ? new App({
+      token: process.env.SLACK_BOT_TOKEN,
+      receiver: expressReceiver,
+    })
+  : new App({
+      clientId: process.env.SLACK_CLIENT_ID,
+      clientSecret: process.env.SLACK_CLIENT_SECRET,
+      stateSecret: uuidv4(),
+      scopes: [
+        'channels:read',
+        'chat:write',
+        'commands',
+        'groups:read',
+        'incoming-webhook',
+      ],
+      installationStore: {
+        storeInstallation: async installation => {
+          try {
+            return await storeInstallation(installation.team.id, installation)
+          } catch (e) {
+            console.log(e)
+          }
+        },
+        fetchInstallation: async ({ teamId }) => {
+          try {
+            const { installation } = await fetchInstallation(teamId)
+            return installation
+          } catch (e) {
+            console.log(e)
+          }
+        },
+      },
+      receiver: expressReceiver,
+    })
 
 const expressApp = expressReceiver.app
 

@@ -43,9 +43,23 @@ module.exports = app => async ({ ack, payload, context }) => {
       }
     }
 
+    const email = userText.split(' ')[0]
+    const project = userText.split(' ')[1]
     const token = btoa(jiraUser.email, jiraUser.token)
-    const jql = `project=${userText} AND assignee=currentuser()`
-
+    const query = `query=is assignee of ${project}`
+    const response = await fetch(
+      `${jiraUser.project}/rest/api/2/user/search/query?${query}`,
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      },
+    )
+    const users = await response.json()
+    const [currentUser] = users.values.filter(
+      user => email === user.emailAddress,
+    )
+    const jql = `project=${project} AND assignee=${currentUser.accountId}`
     const results = await fetch(
       `${jiraUser.project}/rest/api/2/search?jql=${jql}`,
       {
