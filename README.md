@@ -6,8 +6,6 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/GeoDoo/post-your-standup)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/GeoDoo/post-your-standup)
 
-<a href="https://slack.com/oauth/v2/authorize?client_id=1185330437684.1203009117616&scope=channels:read,chat:write,commands,groups:read&user_scope="><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
-
 ### Contributing
 
 If you are interested to contribute to our project, you can find a more
