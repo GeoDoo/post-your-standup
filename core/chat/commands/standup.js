@@ -7,6 +7,7 @@ const { getSectionBlock } = require('@core/blocks')
 module.exports = app => async ({ ack, payload, context }) => {
   ack()
 
+  console.log(payload)
   try {
     const jiraUser = await findByTeamId(payload.team_id)
     const userText = payload.text.trim()
