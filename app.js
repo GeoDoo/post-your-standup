@@ -13,16 +13,12 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 require('dotenv').config()
 
-const expressReceiver = new ExpressReceiver({
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-})
-
-const app = process.env.LOCAL_DEV
-  ? new App({
-      token: process.env.SLACK_BOT_TOKEN,
-      receiver: expressReceiver,
+const expressReceiver = process.env.LOCAL_DEV
+  ? new ExpressReceiver({
+      signingSecret: process.env.SLACK_SIGNING_SECRET,
     })
-  : new App({
+  : new ExpressReceiver({
+      signingSecret: process.env.SLACK_SIGNING_SECRET,
       clientId: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET,
       stateSecret: uuidv4(),
@@ -50,6 +46,14 @@ const app = process.env.LOCAL_DEV
           }
         },
       },
+    })
+
+const app = process.env.LOCAL_DEV
+  ? new App({
+      token: process.env.SLACK_BOT_TOKEN,
+      receiver: expressReceiver,
+    })
+  : new App({
       receiver: expressReceiver,
     })
 
