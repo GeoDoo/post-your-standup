@@ -8,7 +8,6 @@ const { findByTeamId } = require('@db/models/Workspace')
 
 module.exports = app => async ({ event, context }) => {
   try {
-    console.log(event)
     const jiraUser =
       event && event.view ? await findByTeamId(event.view.team_id) : null
     const nonAuthenticatedBlocks = [

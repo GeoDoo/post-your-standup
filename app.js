@@ -5,6 +5,8 @@ const setupJira = require('@core/views/modals/setup-jira')
 const homeAuthenticated = require('@core/views/home_authenticated')
 const { EVENTS, ACTIONS, VIEWS, COMMANDS } = require('@root/constants')
 const { getConnection } = require('@db')
+const { storeInstallation, fetchInstallation } = require('@db/models/Auth')
+const { v4: uuidv4 } = require('uuid')
 
 const db = getConnection()
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
@@ -13,10 +15,36 @@ require('dotenv').config()
 
 const expressReceiver = new ExpressReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
+  clientId: process.env.SLACK_CLIENT_ID,
+  clientSecret: process.env.SLACK_CLIENT_SECRET,
+  stateSecret: uuidv4(),
+  scopes: [
+    'channels:read',
+    'chat:write',
+    'commands',
+    'groups:read',
+    'incoming-webhook',
+  ],
+  installationStore: {
+    storeInstallation: async installation => {
+      try {
+        return await storeInstallation(installation.team.id, installation)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    fetchInstallation: async ({ teamId }) => {
+      try {
+        const { installation } = await fetchInstallation(teamId)
+        return installation
+      } catch (e) {
+        console.log(e)
+      }
+    },
+  },
 })
 
 const app = new App({
-  token: process.env.SLACK_BOT_TOKEN,
   receiver: expressReceiver,
 })
 
