@@ -8,7 +8,7 @@
 
 ### Contributing
 
-If you are interested to contribute to our project, you can find a more
+If you are interested in contributing to our project, you can find a more
 comprehensive guide on how you can do that in our
 [contributing section](CONTRIBUTING.md).
 
@@ -18,7 +18,7 @@ In general, we try to follow Basecamp, described here:
 ### Issues
 
 Please create an issue if you have any problems using the app or want to ask a
-question about development or feature etc.
+question about development or a request for a feature etc.
 
 ---
 
