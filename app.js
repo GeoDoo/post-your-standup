@@ -64,8 +64,6 @@ const app = process.env.LOCAL_DEV
       receiver: expressReceiver,
     })
 
-const expressApp = expressReceiver.app
-
 app.command(COMMANDS.STANDUP, standup(app))
 
 app.event(EVENTS.APP_HOME_VIEWED, home(app))
@@ -74,4 +72,4 @@ app.action(ACTIONS.OPEN_SETUP_JIRA_MODAL, setupJira(app))
 
 app.view(VIEWS.HOME_AUTHENTICATED_VIEW, homeAuthenticated(app))
 
-module.exports = expressApp
+module.exports = expressReceiver
