@@ -1,6 +1,5 @@
 const path = require('path')
 const webpack = require('webpack')
-const autoprefixer = require('autoprefixer')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 require('dotenv').config()
@@ -12,7 +11,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
     chunkFilename: '[id].js',
-    publicPath: '',
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -28,24 +27,17 @@ module.exports = {
         test: /\.pcss$/,
         exclude: /node_modules/,
         use: [
-          { loader: 'style-loader' },
+          {
+            loader: 'style-loader',
+          },
           {
             loader: 'css-loader',
             options: {
-              modules: {
-                localIdentName: '[name]__[local]___[hash:base64:5]',
-              },
-              sourceMap: true,
+              importLoaders: 1,
             },
           },
           {
             loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                ident: 'postcss',
-                plugins: () => [autoprefixer({})],
-              },
-            },
           },
         ],
       },
@@ -68,4 +60,7 @@ module.exports = {
     }),
   ],
   devtool: 'source-map',
+  devServer: {
+    historyApiFallback: true,
+  },
 }
