@@ -1,16 +1,14 @@
 require('module-alias/register')
 
-const { TEXT, SCOPES, REDIRECT_URI } = require('@root/constants')
+const { TEXT, SCOPES } = require('@root/constants')
 const expressReceiver = require('@root/app')
 
 const expressApp = expressReceiver.app
 
-expressReceiver.router.get('/install-url', (_req, res) => {
-  console.log(expressReceiver.installer)
-
+expressReceiver.router.get('/install-url', async (_req, res) => {
   const installUrl =
     expressReceiver.installer &&
-    expressReceiver.installer.generateInstallUrl({
+    (await expressReceiver.installer.generateInstallUrl({
       scopes: [
         SCOPES.GROUPS,
         SCOPES.CHANNELS,
@@ -18,8 +16,7 @@ expressReceiver.router.get('/install-url', (_req, res) => {
         SCOPES.COMMANDS,
         SCOPES.WEBHOOK,
       ],
-      redirectUri: REDIRECT_URI,
-    })
+    }))
   res.send({ installUrl })
 })
 ;(async () => {
