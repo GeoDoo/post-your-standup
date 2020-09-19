@@ -16,7 +16,6 @@ module.exports = app => async ({ event, context }) => {
       getSectionBlock('\n'),
       getDividerBlock(),
       getSectionBlock(TEXT.HOME.SETTINGS.TITLE),
-      getSectionBlock(TEXT.HOME.SETTINGS.INTRO),
       {
         type: 'actions',
         elements: [

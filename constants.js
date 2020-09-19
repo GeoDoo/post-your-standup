@@ -37,11 +37,10 @@ const TEXT = {
       "Our app enables teams to collaborate more efficiently by posting their stand-ups for their Jira projects to their dedicated channels.\nEspecially when you work remotely, sometimes it is tedious to open Jira and go through all members' tickets and start explaining what you did etc.\nNow, you can post your tickets on the channel and argue about them in one place!\nMake your project manager happy, team!\n",
     SETTINGS: {
       TITLE: ':gear: *Settings*\n',
-      INTRO: 'Setup basic authentication for your Jira projects\n',
       INTRO_AUTHENTICATED:
-        ':tada:  ---  *Basic authentication has already been successfully set up*  ---  :tada:\n',
+        ':tada:  ---  *Connection to Jira has already been successfully established*  ---  :tada:\n',
       CHANGE_ACCOUNT:
-        '_If you wish to change Jira account though, you can set a new one by clicking below:_\n',
+        '_If you wish to change Jira account though, you can setup a new one by clicking below:_\n',
     },
   },
   SETUP_JIRA: {
