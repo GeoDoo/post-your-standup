@@ -37,40 +37,42 @@ const TEXT = {
       "Our app enables teams to collaborate more efficiently by posting their stand-ups for their Jira projects to their dedicated channels.\nEspecially when you work remotely, sometimes it is tedious to open Jira and go through all members' tickets and start explaining what you did etc.\nNow, you can post your tickets on the channel and argue about them in one place!\nMake your project manager happy, team!\n",
     SETTINGS: {
       TITLE: ':gear: *Settings*\n',
-      AUTHENTICATION_SUCCESS_MESSAGE:
-        'Basic authentication has already been successfully set up :tada:\n',
+      INTRO: 'Setup basic authentication for your Jira projects\n',
+      INTRO_AUTHENTICATED:
+        ':tada:  ---  *Basic authentication has already been successfully set up*  ---  :tada:\n',
       CHANGE_ACCOUNT:
-        'If you wish to change Jira account though, you can set a new one by clicking below:\n',
+        '_If you wish to change Jira account though, you can set a new one by clicking below:_\n',
     },
   },
   SETUP_JIRA: {
-    TITLE: 'Setup Jira REST API',
+    TITLE: 'Connect to Jira',
     INTRO:
       'This app needs a valid Jira account to access your data from your Jira projects. Please provide us with one below:',
     EMAIL: {
-      PLACEHOLDER: 'Email for basic authentication to access Jira REST API',
+      PLACEHOLDER: 'Email of your Jira account',
       LABEL: 'Email',
       HINT:
         'Ideally this should be a dedicated Jira account in case, for example, the person behind the account leaves the company and someone deletes or deactivates his account',
     },
     TOKEN: {
-      PLACEHOLDER: 'Your Jira API token',
+      PLACEHOLDER: 'Jira token',
       LABEL: 'Token',
       HINT: 'This should be a valid token for the previous account',
     },
     TOKEN_LINKS:
       '_You can create a new token for your account <https://id.atlassian.com/manage-profile/security/api-tokens|here>_\n_For more info, please check <https://confluence.atlassian.com/cloud/api-tokens-938839638.html|here>_',
     DOMAIN: {
-      PLACEHOLDER: "Your company's Jira full domain",
+      PLACEHOLDER: 'Your Jira full domain',
       LABEL: 'Domain',
-      HINT: 'Example: https://myproject.atlassian.net/',
+      HINT: 'Example: https://myproject.atlassian.net',
     },
     NOTICE:
-      '*IMPORTANT NOTICE:* For security reasons, you will not be able to access the account details you entered after you click submit! If you want to change anything in the future, you will need to enter everything anew. Finally, we do not use your data for any other reason than to connect this app with your Jira boards :slightly_smiling_face:',
+      '*IMPORTANT NOTICE:* For security reasons, you will not be able to access the account details you entered after you click submit! If you want to change anything in the future, you will need to enter everything anew. Finally, we do not use your data for any other reason than to connect our app with your Jira boards :slightly_smiling_face:',
   },
   BUTTONS: {
     CHANGE_ACCOUNT: 'Change Jira account',
     SUBMIT: 'Submit',
+    CONNECT_TO_JIRA: 'Connect to Jira',
   },
   DB: {
     MESSAGES: {

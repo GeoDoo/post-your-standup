@@ -16,12 +16,12 @@ module.exports = app => async ({ event, context }) => {
       getSectionBlock('\n'),
       getDividerBlock(),
       getSectionBlock(TEXT.HOME.SETTINGS.TITLE),
-      getSectionBlock('Setup basic authentication for your Jira projects\n'),
+      getSectionBlock(TEXT.HOME.SETTINGS.INTRO),
       {
         type: 'actions',
         elements: [
           getButtonBlock(
-            'Authenticate me',
+            TEXT.BUTTONS.CONNECT_TO_JIRA,
             'authenticate_me',
             ACTIONS.OPEN_SETUP_JIRA_MODAL,
           ),
@@ -34,7 +34,7 @@ module.exports = app => async ({ event, context }) => {
       getSectionBlock('\n'),
       getDividerBlock(),
       getSectionBlock(TEXT.HOME.SETTINGS.TITLE),
-      getSectionBlock(TEXT.HOME.SETTINGS.AUTHENTICATION_SUCCESS_MESSAGE),
+      getSectionBlock(TEXT.HOME.SETTINGS.INTRO_AUTHENTICATED),
       getSectionBlock('\n'),
       getSectionBlock(TEXT.HOME.SETTINGS.CHANGE_ACCOUNT),
       {

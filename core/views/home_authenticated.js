@@ -36,7 +36,7 @@ module.exports = app => async ({ ack, body, view, context }) => {
           getSectionBlock('\n'),
           getDividerBlock(),
           getSectionBlock(TEXT.HOME.SETTINGS.TITLE),
-          getSectionBlock(TEXT.HOME.SETTINGS.AUTHENTICATION_SUCCESS_MESSAGE),
+          getSectionBlock(TEXT.HOME.SETTINGS.INTRO_AUTHENTICATED),
           getSectionBlock('\n'),
           getSectionBlock(TEXT.HOME.SETTINGS.CHANGE_ACCOUNT),
           {
