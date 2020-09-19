@@ -17,6 +17,14 @@ const VIEWS = {
   HOME_AUTHENTICATED_VIEW: 'home_authenticated_view',
 }
 
+const SCOPES = {
+  GROUPS: 'groups:read',
+  CHANNELS: 'channels:read',
+  CHAT: 'chat:write',
+  COMMANDS: 'commands',
+  WEBHOOK: 'incoming-webhook',
+}
+
 const TEXT = {
   HOME: {
     TITLE: '*Welcome to your _Post Your Standup_ app*',
@@ -49,13 +57,6 @@ const TEXT = {
       NO_ISSUES_FOUND: 'No issues found. All done here. Great job!',
     },
   },
-  SCOPES: {
-    GROUPS: 'groups:read',
-    CHANNELS: 'channels:read',
-    CHAT: 'chat:write',
-    COMMANDS: 'commands',
-    WEBHOOK: 'incoming-webhook',
-  },
 }
 
 module.exports = {
@@ -63,5 +64,6 @@ module.exports = {
   EVENTS,
   ACTIONS,
   VIEWS,
+  SCOPES,
   TEXT,
 }

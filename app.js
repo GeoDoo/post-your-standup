@@ -3,7 +3,14 @@ const standup = require('@core/chat/commands/standup')
 const home = require('@core/views/home')
 const setupJira = require('@core/views/modals/setup-jira')
 const homeAuthenticated = require('@core/views/home_authenticated')
-const { EVENTS, ACTIONS, VIEWS, COMMANDS, TEXT } = require('@root/constants')
+const {
+  EVENTS,
+  ACTIONS,
+  VIEWS,
+  COMMANDS,
+  SCOPES,
+  TEXT,
+} = require('@root/constants')
 const { getConnection } = require('@db')
 const { storeInstallation, fetchInstallation } = require('@db/models/Auth')
 const { v4: uuidv4 } = require('uuid')
@@ -23,11 +30,11 @@ const expressReceiver = process.env.LOCAL_DEV
       clientSecret: process.env.SLACK_CLIENT_SECRET,
       stateSecret: uuidv4(),
       scopes: [
-        TEXT.SCOPES.GROUPS,
-        TEXT.SCOPES.CHANNELS,
-        TEXT.SCOPES.CHAT,
-        TEXT.SCOPES.COMMANDS,
-        TEXT.SCOPES.WEBHOOK,
+        SCOPES.GROUPS,
+        SCOPES.CHANNELS,
+        SCOPES.CHAT,
+        SCOPES.COMMANDS,
+        SCOPES.WEBHOOK,
       ],
       installationStore: {
         storeInstallation: async installation => {
