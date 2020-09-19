@@ -20,8 +20,8 @@ module.exports = app => async ({ ack, payload, context }) => {
             ':thinking_face: did you forget to type the key of your project?',
           user: payload.user_id,
         })
-      } catch (error) {
-        console.log(error)
+      } catch (e) {
+        console.error(e)
         return
       }
     }
@@ -37,8 +37,8 @@ module.exports = app => async ({ ack, payload, context }) => {
             ),
           ],
         })
-      } catch (error) {
-        console.log(error)
+      } catch (e) {
+        console.error(e)
         return
       }
     }
@@ -93,7 +93,7 @@ module.exports = app => async ({ ack, payload, context }) => {
       channel: payload.channel_id,
       blocks,
     })
-  } catch (error) {
-    console.error(error)
+  } catch (e) {
+    console.error(e)
   }
 }
