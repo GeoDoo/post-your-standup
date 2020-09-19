@@ -5,19 +5,24 @@ const expressReceiver = require('@root/app')
 
 const expressApp = expressReceiver.app
 
-expressReceiver.router.get('/install-url', async (_req, res) => {
-  const installUrl =
-    expressReceiver.installer &&
-    (await expressReceiver.installer.generateInstallUrl({
-      scopes: [
-        SCOPES.GROUPS,
-        SCOPES.CHANNELS,
-        SCOPES.CHAT,
-        SCOPES.COMMANDS,
-        SCOPES.WEBHOOK,
-      ],
-    }))
-  res.send({ installUrl })
+expressReceiver.router.get('/install-url', async (_req, res, next) => {
+  try {
+    const installUrl =
+      expressReceiver.installer &&
+      (await expressReceiver.installer.generateInstallUrl({
+        scopes: [
+          SCOPES.GROUPS,
+          SCOPES.CHANNELS,
+          SCOPES.CHAT,
+          SCOPES.COMMANDS,
+          SCOPES.WEBHOOK,
+        ],
+      }))
+    res.send({ installUrl })
+  } catch (e) {
+    console.error(e)
+    next(e)
+  }
 })
 ;(async () => {
   expressApp.listen(process.env.PORT || 3000, () =>
