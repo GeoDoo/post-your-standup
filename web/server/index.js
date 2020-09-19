@@ -7,7 +7,7 @@ require('dotenv').config()
 
 const { getConnection } = require('@db')
 const { findAll } = require('@db/models/Workspace')
-const config = require('@admin/config')
+const config = require('@web/config')
 
 getConnection()
 

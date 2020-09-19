@@ -17,8 +17,8 @@
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md)\"",
     "docker-dev": "docker-compose up",
     "docker-prod": "docker-compose up -d",
-    "admin:start": "webpack-dev-server --open --hot --mode development",
-    "admin:server:start": "nodemon admin/server"
+    "web:start": "webpack-dev-server --open --hot --mode development",
+    "web:server:start": "nodemon web/server"
   },
   "dependencies": {
     "@apollo/client": "^3.2.0",
@@ -109,7 +109,7 @@
   },
   "_moduleAliases": {
     "@root": ".",
-    "@admin": "./admin",
+    "@web": "./web",
     "@core": "./core",
     "@db": "./db",
     "@utils": "./utils"

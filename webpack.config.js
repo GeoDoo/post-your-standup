@@ -7,7 +7,7 @@ require('dotenv').config()
 
 module.exports = {
   mode: 'development',
-  entry: './admin/client/index.js',
+  entry: './web/client/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -41,8 +41,10 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: () => [autoprefixer({})],
+              postcssOptions: {
+                ident: 'postcss',
+                plugins: () => [autoprefixer({})],
+              },
             },
           },
         ],
@@ -55,7 +57,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: __dirname + '/admin/client/index.html',
+      template: __dirname + '/web/client/index.html',
       filename: 'index.html',
       inject: 'body',
     }),
