@@ -1,6 +1,7 @@
 const fetch = require('node-fetch')
 const { formatIssues, today } = require('@utils/formatters')
 const { btoa } = require('@utils/encoding')
+const { isEmail } = require('@utils/validate')
 const { findByTeamId } = require('@db/models/Workspace')
 const { getSectionBlock } = require('@core/blocks')
 
@@ -11,21 +12,6 @@ module.exports = app => async ({ ack, payload, context }) => {
     const jiraUser = await findByTeamId(payload.team_id)
     const userText = payload.text.trim()
 
-    if (!userText) {
-      try {
-        return await app.client.chat.postEphemeral({
-          token: context.botToken,
-          channel: payload.channel_id,
-          text:
-            ':thinking_face: did you forget to type the key of your project?',
-          user: payload.user_id,
-        })
-      } catch (e) {
-        console.error(e)
-        return
-      }
-    }
-
     if (userText && userText === 'help') {
       try {
         return await app.client.chat.postMessage({
@@ -33,7 +19,7 @@ module.exports = app => async ({ ack, payload, context }) => {
           channel: payload.channel_id,
           blocks: [
             getSectionBlock(
-              "> This app is relatively easy to use.\n You will need to type `/standup`, leave a space and then the key of the project you want to post from. The key is usually the first part of any ticket's name. _For example_: Given you have tickets like DSUS-14, DSUS-567, then you will need to type: `/standup DSUS`",
+              "> This app is relatively easy to use. It needs two pieces of information from you: your Jira email and your tickets' prefix. Easy peasy!\n An example can be: `/standup my.jira.email@company.com DSUS`\n _hint: if you have a ticket DSUS-1 or SMD-234, then DSUS and SMD are the prefixes_",
             ),
           ],
         })
@@ -43,9 +29,41 @@ module.exports = app => async ({ ack, payload, context }) => {
       }
     }
 
-    const email = userText.split(' ')[0]
-    const project = userText.split(' ')[1]
+    const email = userText && userText.split(' ')[0]
+    const project = userText && userText.split(' ')[1]
+
+    if (email && !isEmail(email)) {
+      try {
+        return await app.client.chat.postEphemeral({
+          token: context.botToken,
+          channel: payload.channel_id,
+          text:
+            ":thinking_face: did you type your email correctly? Doesn't seem right to me! :smile:",
+          user: payload.user_id,
+        })
+      } catch (e) {
+        console.error(e)
+        return
+      }
+    }
+
+    if (!email || !project) {
+      try {
+        return await app.client.chat.postEphemeral({
+          token: context.botToken,
+          channel: payload.channel_id,
+          text:
+            ':thinking_face: did you forget to type your email or project prefix? We need both of them! :slightly_smiling_face:',
+          user: payload.user_id,
+        })
+      } catch (e) {
+        console.error(e)
+        return
+      }
+    }
+
     const token = btoa(jiraUser.email, jiraUser.token)
+
     const query = `query=is assignee of ${project}`
     const response = await fetch(
       `${jiraUser.project}/rest/api/2/user/search/query?${query}`,
@@ -59,6 +77,22 @@ module.exports = app => async ({ ack, payload, context }) => {
     const [currentUser] = users.values.filter(
       user => email === user.emailAddress,
     )
+
+    if (!currentUser) {
+      try {
+        return await app.client.chat.postEphemeral({
+          token: context.botToken,
+          channel: payload.channel_id,
+          text:
+            ':sob: we could not match your email or project! Are you absolutely certain you typed your Jira email AND project correctly? Please try again, thanks! :slightly_smiling_face:',
+          user: payload.user_id,
+        })
+      } catch (e) {
+        console.error(e)
+        return
+      }
+    }
+
     const jql = `project=${project} AND assignee=${currentUser.accountId}`
     const results = await fetch(
       `${jiraUser.project}/rest/api/2/search?jql=${jql}`,
@@ -68,15 +102,6 @@ module.exports = app => async ({ ack, payload, context }) => {
         },
       },
     )
-
-    if (results.status === 400) {
-      return await app.client.chat.postEphemeral({
-        token: context.botToken,
-        channel: payload.channel_id,
-        text: ':thinking_face: Are you sure you typed the correct project key?',
-        user: payload.user_id,
-      })
-    }
 
     const { issues } = await results.json()
     const blocks = [
