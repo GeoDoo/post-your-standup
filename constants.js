@@ -33,6 +33,29 @@ const TEXT = {
   BUTTONS: {
     CHANGE_ACCOUNT: 'Change Jira account',
   },
+  DB: {
+    MESSAGES: {
+      CONNECTION_SUCCESSFUL: 'Your connection with database was successful!',
+      GENERIC_ERROR: 'MongoDB error: ',
+    },
+  },
+  APPS: {
+    MESSAGES: {
+      BOLT: '⚡️ Bolt app is running!',
+    },
+  },
+  COMMANDS: {
+    STANDUP: {
+      NO_ISSUES_FOUND: 'No issues found. All done here. Great job!',
+    },
+  },
+  SCOPES: {
+    GROUPS: 'groups:read',
+    CHANNELS: 'channels:read',
+    CHAT: 'chat:write',
+    COMMANDS: 'commands',
+    WEBHOOK: 'incoming-webhook',
+  },
 }
 
 module.exports = {

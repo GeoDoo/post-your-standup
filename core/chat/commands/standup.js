@@ -94,6 +94,6 @@ module.exports = app => async ({ ack, payload, context }) => {
       blocks,
     })
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }

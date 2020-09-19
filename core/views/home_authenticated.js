@@ -53,6 +53,6 @@ module.exports = app => async ({ ack, body, view, context }) => {
       },
     })
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }

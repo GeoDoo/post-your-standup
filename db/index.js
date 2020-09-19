@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { TEXT } = require('@root/constants')
 
 mongoose.set('useFindAndModify', false)
 
@@ -15,7 +16,7 @@ const connect = () => {
         pass: process.env.DB_PASSWORD,
       },
     )
-    .then(() => console.log('connection successful'))
+    .then(() => console.log(TEXT.DB.MESSAGES.CONNECTION_SUCCESSFUL))
     .catch(err => console.error(err))
 }
 

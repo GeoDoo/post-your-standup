@@ -55,6 +55,6 @@ module.exports = app => async ({ ack, body, context }) => {
       },
     })
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }

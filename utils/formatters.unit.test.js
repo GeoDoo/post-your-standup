@@ -1,3 +1,4 @@
+const { TEXT } = require('../constants')
 const { today, formatIssues } = require('./formatters')
 
 jest.mock('moment', () => () => ({
@@ -32,7 +33,7 @@ describe('Helpers', () => {
     it('should provide useful feedback when no issues found', () => {
       const data = []
 
-      expect(formatIssues(data)).toBe('No issues found. All done here!')
+      expect(formatIssues(data)).toBe(TEXT.COMMANDS.STANDUP.NO_ISSUES_FOUND)
     })
   })
 })

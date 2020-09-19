@@ -1,7 +1,8 @@
 const moment = require('moment')
+const { TEXT } = require('../constants')
 
 const formatIssues = (data, projectUrl) => {
-  if (!data || !data.length) return 'No issues found. All done here!'
+  if (!data || !data.length) return TEXT.COMMANDS.STANDUP.NO_ISSUES_FOUND
 
   return data
     .map(
