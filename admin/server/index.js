@@ -5,9 +5,9 @@ const jwksClient = require('jwks-rsa')
 require('module-alias/register')
 require('dotenv').config()
 
-const { getConnection } = require('../../db')
-const { findAll } = require('../../db/models/Workspace')
-const config = require('../config')
+const { getConnection } = require('@db')
+const { findAll } = require('@db/models/Workspace')
+const config = require('@admin/config')
 
 getConnection()
 
