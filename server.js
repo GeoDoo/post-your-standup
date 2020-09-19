@@ -6,6 +6,8 @@ const expressReceiver = require('@root/app')
 const expressApp = expressReceiver.app
 
 expressReceiver.router.get('/install-url', (_req, res) => {
+  console.log(expressReceiver.installer)
+
   const installUrl =
     expressReceiver.installer &&
     expressReceiver.installer.generateInstallUrl({
