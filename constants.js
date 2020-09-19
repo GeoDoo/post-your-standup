@@ -43,8 +43,34 @@ const TEXT = {
         'If you wish to change Jira account though, you can set a new one by clicking below:\n',
     },
   },
+  SETUP_JIRA: {
+    TITLE: 'Setup Jira REST API',
+    INTRO:
+      'This app needs a valid Jira account to access your data from your Jira projects. Please provide us with one below:',
+    EMAIL: {
+      PLACEHOLDER: 'Email for basic authentication to access Jira REST API',
+      LABEL: 'Email',
+      HINT:
+        'Ideally this should be a dedicated Jira account in case, for example, the person behind the account leaves the company and someone deletes or deactivates his account',
+    },
+    TOKEN: {
+      PLACEHOLDER: 'Your Jira API token',
+      LABEL: 'Token',
+      HINT: 'This should be a valid token for the previous account',
+    },
+    TOKEN_LINKS:
+      '_You can create a new token for your account <https://id.atlassian.com/manage-profile/security/api-tokens|here>_\n_For more info, please check <https://confluence.atlassian.com/cloud/api-tokens-938839638.html|here>_',
+    DOMAIN: {
+      PLACEHOLDER: "Your company's Jira full domain",
+      LABEL: 'Domain',
+      HINT: 'Example: https://myproject.atlassian.net/',
+    },
+    NOTICE:
+      '*IMPORTANT NOTICE:* For security reasons, you will not be able to access the account details you entered after you click submit! If you want to change anything in the future, you will need to enter everything anew. Finally, we do not use your data for any other reason than to connect this app with your Jira boards :slightly_smiling_face:',
+  },
   BUTTONS: {
     CHANGE_ACCOUNT: 'Change Jira account',
+    SUBMIT: 'Submit',
   },
   DB: {
     MESSAGES: {
