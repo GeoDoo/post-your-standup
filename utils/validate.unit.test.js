@@ -7,11 +7,13 @@ describe('isEmail', () => {
     const email3 = 'test.tester@test'
     const email4 = 'test.tester'
     const email5 = '!£$£$!£$@ASDASD'
+    const email6 = 'TEST@TEST.COM'
 
     expect(isEmail(email1)).toBe(true)
     expect(isEmail(email2)).toBe(true)
     expect(isEmail(email3)).toBe(true)
     expect(isEmail(email4)).toBe(false)
     expect(isEmail(email5)).toBe(false)
+    expect(isEmail(email6)).toBe(true)
   })
 })

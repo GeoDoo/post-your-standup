@@ -1,4 +1,5 @@
 const fetch = require('node-fetch')
+const { JIRA_API_PATH, TEXT } = require('@root/constants')
 const { formatIssues, today } = require('@utils/formatters')
 const { btoa } = require('@utils/encoding')
 const { isEmail } = require('@utils/validate')
@@ -12,16 +13,12 @@ module.exports = app => async ({ ack, payload, context }) => {
     const jiraUser = await findByTeamId(payload.team_id)
     const userText = payload.text.trim()
 
-    if (userText && userText === 'help') {
+    if (userText && userText === TEXT.COMMANDS.HELP_TEXT_MATCH) {
       try {
         return await app.client.chat.postMessage({
           token: context.botToken,
           channel: payload.channel_id,
-          blocks: [
-            getSectionBlock(
-              "> This app is relatively easy to use. It needs two pieces of information from you: your Jira email and your tickets' prefix. Easy peasy!\n An example can be: `/standup my.jira.email@company.com DSUS`\n _hint: if you have a ticket DSUS-1 or SMD-234, then DSUS and SMD are the prefixes_",
-            ),
-          ],
+          blocks: [getSectionBlock(TEXT.COMMANDS.STANDUP.HELP)],
         })
       } catch (e) {
         console.error(e)
@@ -37,8 +34,7 @@ module.exports = app => async ({ ack, payload, context }) => {
         return await app.client.chat.postEphemeral({
           token: context.botToken,
           channel: payload.channel_id,
-          text:
-            ":thinking_face: did you type your email correctly? Doesn't seem right to me! :smile:",
+          text: TEXT.COMMANDS.STANDUP.INVALID_EMAIL,
           user: payload.user_id,
         })
       } catch (e) {
@@ -52,8 +48,7 @@ module.exports = app => async ({ ack, payload, context }) => {
         return await app.client.chat.postEphemeral({
           token: context.botToken,
           channel: payload.channel_id,
-          text:
-            ':thinking_face: did you forget to type your email or project prefix? We need both of them! :slightly_smiling_face:',
+          text: TEXT.COMMANDS.STANDUP.NO_TEXT,
           user: payload.user_id,
         })
       } catch (e) {
@@ -66,7 +61,7 @@ module.exports = app => async ({ ack, payload, context }) => {
 
     const query = `query=is assignee of ${project}`
     const response = await fetch(
-      `${jiraUser.project}/rest/api/2/user/search/query?${query}`,
+      `${jiraUser.project}/${JIRA_API_PATH.SEARCH_USER}?${query}`,
       {
         headers: {
           Authorization: `Basic ${token}`,
@@ -83,8 +78,7 @@ module.exports = app => async ({ ack, payload, context }) => {
         return await app.client.chat.postEphemeral({
           token: context.botToken,
           channel: payload.channel_id,
-          text:
-            ':sob: we could not match your email or project! Are you absolutely certain you typed your Jira email AND project correctly? Please try again, thanks! :slightly_smiling_face:',
+          text: TEXT.COMMANDS.STANDUP.NO_USER,
           user: payload.user_id,
         })
       } catch (e) {
@@ -93,30 +87,30 @@ module.exports = app => async ({ ack, payload, context }) => {
       }
     }
 
-    const jql = `project=${project} AND assignee=${currentUser.accountId}`
+    const jql = `jql=project=${project} AND assignee=${currentUser.accountId}`
     const results = await fetch(
-      `${jiraUser.project}/rest/api/2/search?jql=${jql}`,
+      `${jiraUser.project}/${JIRA_API_PATH.SEARCH}?${jql}`,
       {
         headers: {
           Authorization: `Basic ${token}`,
         },
       },
     )
-
     const { issues } = await results.json()
-    const blocks = [
-      getSectionBlock(
-        `> *@${payload.user_name}'s standup for today, ${today()}*`,
-      ),
-      getSectionBlock('Jira tickets currently working on:'),
-      // limit to 16 issues = 2845 chars, due to invalid_blocks error: max length 3001 chars
-      getSectionBlock(`${formatIssues(issues.slice(0, 16), jiraUser.project)}`),
-    ]
 
     await app.client.chat.postMessage({
       token: context.botToken,
       channel: payload.channel_id,
-      blocks,
+      blocks: [
+        getSectionBlock(
+          `> *@${payload.user_name}'s standup for today, ${today()}*`,
+        ),
+        getSectionBlock('Jira tickets currently working on:'),
+        // limit to 16 issues = 2845 chars, due to invalid_blocks error: max length 3001 chars
+        getSectionBlock(
+          `${formatIssues(issues.slice(0, 16), jiraUser.project)}`,
+        ),
+      ],
     })
   } catch (e) {
     console.error(e)

@@ -1,5 +1,10 @@
 require('dotenv').config()
 
+const JIRA_API_PATH = {
+  SEARCH_USER: 'rest/api/3/user/search/query',
+  SEARCH: 'rest/api/3/search',
+}
+
 const COMMANDS = {
   STANDUP: process.env.COMMAND,
 }
@@ -53,13 +58,23 @@ const TEXT = {
     },
   },
   COMMANDS: {
+    HELP_TEXT_MATCH: 'help',
     STANDUP: {
       NO_ISSUES_FOUND: 'No issues found. All done here. Great job!',
+      HELP:
+        "> This app is relatively easy to use. It needs two pieces of information from you: your Jira email and your tickets' prefix. Easy peasy!\n An example can be: `/standup my.jira.email@company.com DSUS`\n _hint: if you have a ticket DSUS-1 or SMD-234, then DSUS and SMD are the prefixes_",
+      INVALID_EMAIL:
+        ":thinking_face: did you type your email correctly? Doesn't seem right to me! :smile:",
+      NO_TEXT:
+        ':thinking_face: did you forget to type your email or project prefix? We need both of them! :slightly_smiling_face:',
+      NO_USER:
+        ':sob: we could not match your email or project! Are you absolutely certain you typed your Jira email AND project correctly? Please try again, thanks! :slightly_smiling_face:',
     },
   },
 }
 
 module.exports = {
+  JIRA_API_PATH,
   COMMANDS,
   EVENTS,
   ACTIONS,
