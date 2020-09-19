@@ -30,6 +30,9 @@ const SCOPES = {
   WEBHOOK: 'incoming-webhook',
 }
 
+const REDIRECT_URI =
+  'https://post-your-standup.codinginsights.blog/slack/oauth_redirect'
+
 const TEXT = {
   HOME: {
     TITLE: '*Welcome to your _Post Your Standup_ app*',
@@ -107,5 +110,6 @@ module.exports = {
   ACTIONS,
   VIEWS,
   SCOPES,
+  REDIRECT_URI,
   TEXT,
 }
