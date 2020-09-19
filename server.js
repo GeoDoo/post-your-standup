@@ -6,6 +6,8 @@ const expressReceiver = require('@root/app')
 const expressApp = expressReceiver.app
 
 expressReceiver.router.get('/install-url', async (_req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+
   try {
     const installUrl =
       expressReceiver.installer &&
