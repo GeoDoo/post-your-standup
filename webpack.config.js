@@ -62,5 +62,8 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
+    host: 'localhost',
+    port: 8080,
+    disableHostCheck: true,
   },
 }
