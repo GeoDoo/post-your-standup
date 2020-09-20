@@ -1,14 +1,29 @@
 import React from 'react'
 
-import AddToSlack from '../components/AddToSlack'
+import withSidebar from '../hocs/withSidebar'
+
+import Intro from '../components/Intro'
+import HowItWorks from '../components/HowItWorks'
+import Features from '../components/Features'
+
+import StickyMenu from '../components/StickyMenu'
+
+import ribbon from '../assets/images/forkme_right_orange_ff7600.svg'
+
+import './Landing.pcss'
+import './Page.pcss'
 
 const Landing = () => {
   return (
-    <div>
-      <h1>Post your Standup</h1>
-      <AddToSlack />
+    <div className="page">
+      <a href="https://github.com/GeoDoo/post-your-standup">
+        <img src={ribbon} className="ribbon" alt="Fork me on GitHub" />
+      </a>
+      <Intro />
+      <HowItWorks />
+      <Features />
     </div>
   )
 }
 
-export default Landing
+export default withSidebar(Landing, StickyMenu)

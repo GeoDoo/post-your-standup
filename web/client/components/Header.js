@@ -7,10 +7,10 @@ import './Header.pcss'
 const Header = () => {
   return (
     <header>
+      <UserMenu />
       <a className="logo" href="/">
         Post Your Standup
       </a>
-      <UserMenu />
     </header>
   )
 }
