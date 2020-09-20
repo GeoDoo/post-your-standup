@@ -2,20 +2,22 @@ const WorkspaceModel = require('./Schema')
 const { encrypt, decrypt } = require('@utils/cipher')
 
 const findByTeamId = async teamId => {
-  return WorkspaceModel.findOne({ teamId })
-    .then(workspace => {
-      if (workspace) {
-        return {
-          email: workspace.email,
-          token: decrypt(workspace.token),
-          project: workspace.project,
-        }
+  try {
+    const workspace = await WorkspaceModel.findOne({ teamId })
+
+    if (workspace) {
+      return {
+        email: workspace.email,
+        token: decrypt(workspace.token),
+        project: workspace.project,
       }
-      return null
-    })
-    .catch(e => {
-      return e
-    })
+    }
+
+    return null
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
 }
 
 const upsertWorkspace = async (filter, update) => {
@@ -27,11 +29,12 @@ const upsertWorkspace = async (filter, update) => {
 }
 
 const findAll = async () => {
-  return await WorkspaceModel.find({}, function (err, workspaces) {
-    if (err) throw err
-
-    return workspaces
-  })
+  try {
+    return await WorkspaceModel.find({})
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
 }
 
 module.exports = { findByTeamId, upsertWorkspace, findAll }
