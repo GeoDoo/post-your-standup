@@ -1,14 +1,18 @@
 import React from 'react'
 
-import Login from './Login'
-import Logout from './Logout'
+import LoginMenuItem from './LoginMenuItem'
+import LogoutMenuItem from './LogoutMenuItem'
+import DashboardMenuItem from './DashboardMenuItem'
+
+import './UserMenu.pcss'
 
 const UserMenu = () => {
   return (
     <nav id="user-menu">
-      <ul>
-        <Login />
-        <Logout />
+      <ul className="menu">
+        <LoginMenuItem />
+        <LogoutMenuItem />
+        <DashboardMenuItem />
       </ul>
     </nav>
   )

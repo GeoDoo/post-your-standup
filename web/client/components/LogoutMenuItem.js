@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 
-const Logout = () => {
+const LogoutMenuItem = () => {
   const { isAuthenticated, logout } = useAuth0()
 
   return isAuthenticated ? (
@@ -20,4 +20,4 @@ const Logout = () => {
   ) : null
 }
 
-export default Logout
+export default LogoutMenuItem

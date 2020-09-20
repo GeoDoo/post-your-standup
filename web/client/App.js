@@ -13,8 +13,8 @@ const App = () => {
   return (
     <>
       <main>
-        <Header />
         <Router>
+          <Header />
           <Switch>
             <Route exact path="/">
               <Landing />
