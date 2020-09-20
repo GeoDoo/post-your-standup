@@ -100,6 +100,14 @@ const TEXT = {
   },
 }
 
+const ALGORITHM = {
+  BLOCK_CIPHER: 'aes-256-gcm',
+  AUTH_TAG_BYTE_LEN: 16,
+  IV_BYTE_LEN: 12,
+  KEY_BYTE_LEN: 32,
+  SALT_BYTE_LEN: 16,
+}
+
 module.exports = {
   JIRA_API_PATH,
   COMMANDS,
@@ -108,4 +116,5 @@ module.exports = {
   VIEWS,
   SCOPES,
   TEXT,
+  ALGORITHM,
 }

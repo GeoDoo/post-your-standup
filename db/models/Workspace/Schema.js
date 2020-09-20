@@ -16,7 +16,7 @@ const WorkspaceSchema = new Schema({
     trim: true,
   },
   token: {
-    type: String,
+    type: Buffer,
     trim: true,
   },
   project: {
