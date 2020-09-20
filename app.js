@@ -46,8 +46,7 @@ const expressReceiver = process.env.LOCAL_DEV
         },
         fetchInstallation: async ({ teamId }) => {
           try {
-            const { installation } = await fetchInstallation(teamId)
-            return installation
+            return await fetchInstallation(teamId)
           } catch (e) {
             console.log(e)
           }

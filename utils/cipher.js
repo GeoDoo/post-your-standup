@@ -35,7 +35,7 @@ const decrypt = encrypted => {
   decipher.setAuthTag(authTag)
 
   const decryptedMessage = decipher.update(encryptedMessage)
-  return Buffer.concat([decryptedMessage, decipher.final()])
+  return Buffer.concat([decryptedMessage, decipher.final()]).toString('utf-8')
 }
 
 module.exports = { encrypt, decrypt }

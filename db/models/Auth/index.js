@@ -1,15 +1,16 @@
 const AuthModel = require('./Schema')
 
 const fetchInstallation = async teamId => {
-  return await AuthModel.findOne({ teamId }, function (err, auth) {
-    if (err) throw err
-
-    if (auth) {
-      return auth.installation
-    }
-
-    return null
-  })
+  return AuthModel.findOne({ teamId })
+    .then(auth => {
+      if (auth) {
+        return auth.installation
+      }
+      return null
+    })
+    .catch(e => {
+      return e
+    })
 }
 
 const storeInstallation = async (teamId, installation) => {

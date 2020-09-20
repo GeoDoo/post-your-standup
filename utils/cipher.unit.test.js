@@ -5,6 +5,6 @@ describe('cipher', () => {
     const plaintext = 'my message text to be encrypted'
     const encryptedText = encrypt(plaintext)
 
-    expect(decrypt(encryptedText).toString('utf8')).toBe(plaintext)
+    expect(decrypt(encryptedText)).toBe(plaintext)
   })
 })
