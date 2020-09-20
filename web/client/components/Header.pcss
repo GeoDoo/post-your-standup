@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
 header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-areas: 'menu logo auto';
 
   & .logo {
     font-family: 'Bangers', cursive;
-    font-size: 50px;
+    font-size: 3em;
+    text-align: center;
   }
 }

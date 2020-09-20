@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Frame from './components/Frame'
 import Landing from './pages/Landing'
 import Dashboard from './pages/Dashboard'
@@ -11,9 +12,9 @@ import './App.pcss'
 const App = () => {
   return (
     <>
-      <div className="inner">
+      <main>
+        <Header />
         <Router>
-          <Header />
           <Switch>
             <Route exact path="/">
               <Landing />
@@ -23,7 +24,8 @@ const App = () => {
             </Route>
           </Switch>
         </Router>
-      </div>
+        <Footer />
+      </main>
       <Frame />
     </>
   )
