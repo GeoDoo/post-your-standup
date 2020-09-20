@@ -4,8 +4,8 @@ import AddToSlack from '../components/AddToSlack'
 
 const Intro = () => {
   return (
-    <div id="intro" className="section">
-      <div className="left">
+    <div id="introduction" className="section">
+      <div className="half">
         <h1>Post Your Standup</h1>
         <div className="pitch">
           <p>Add Post Your Standup to your workspace,</p>

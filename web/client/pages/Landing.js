@@ -1,8 +1,12 @@
 import React from 'react'
 
+import withSidebar from '../hocs/withSidebar'
+
 import Intro from '../components/Intro'
 import HowItWorks from '../components/HowItWorks'
 import Features from '../components/Features'
+
+import StickyMenu from '../components/StickyMenu'
 
 import ribbon from '../assets/images/forkme_right_orange_ff7600.svg'
 
@@ -22,4 +26,4 @@ const Landing = () => {
   )
 }
 
-export default Landing
+export default withSidebar(Landing, StickyMenu)
