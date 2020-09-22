@@ -1,9 +1,9 @@
+require('module-alias/register')
+require('dotenv').config()
+
 const { ApolloServer, gql, AuthenticationError } = require('apollo-server')
 const jsonwebtoken = require('jsonwebtoken')
 const jwksClient = require('jwks-rsa')
-
-require('module-alias/register')
-require('dotenv').config()
 
 const { getConnection } = require('@db')
 const { findAll } = require('@db/models/Workspace')

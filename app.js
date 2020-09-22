@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { App, ExpressReceiver } = require('@slack/bolt')
 const standup = require('@core/chat/commands/standup')
 const home = require('@core/views/home')
@@ -18,57 +20,50 @@ const { v4: uuidv4 } = require('uuid')
 const db = getConnection()
 db.on('error', console.error.bind(console, TEXT.DB.MESSAGES.GENERIC_ERROR))
 
-require('dotenv').config()
+const expressReceiver = new ExpressReceiver({
+  signingSecret: process.env.SLACK_SIGNING_SECRET,
+  clientId: process.env.SLACK_CLIENT_ID,
+  clientSecret: process.env.SLACK_CLIENT_SECRET,
+  stateSecret: uuidv4(),
+  scopes: [
+    SCOPES.GROUPS,
+    SCOPES.CHANNELS,
+    SCOPES.CHAT,
+    SCOPES.COMMANDS,
+    SCOPES.WEBHOOK,
+  ],
+  installationStore: {
+    storeInstallation: async installation => {
+      try {
+        return await storeInstallation(installation.team.id, installation)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    fetchInstallation: async ({ teamId }) => {
+      try {
+        return await fetchInstallation(teamId)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+  },
+})
 
-const expressReceiver = process.env.LOCAL_DEV
-  ? new ExpressReceiver({
-      signingSecret: process.env.SLACK_SIGNING_SECRET,
-    })
-  : new ExpressReceiver({
-      signingSecret: process.env.SLACK_SIGNING_SECRET,
-      clientId: process.env.SLACK_CLIENT_ID,
-      clientSecret: process.env.SLACK_CLIENT_SECRET,
-      stateSecret: uuidv4(),
-      scopes: [
-        SCOPES.GROUPS,
-        SCOPES.CHANNELS,
-        SCOPES.CHAT,
-        SCOPES.COMMANDS,
-        SCOPES.WEBHOOK,
-      ],
-      installationStore: {
-        storeInstallation: async installation => {
-          try {
-            return await storeInstallation(installation.team.id, installation)
-          } catch (e) {
-            console.log(e)
-          }
-        },
-        fetchInstallation: async ({ teamId }) => {
-          try {
-            return await fetchInstallation(teamId)
-          } catch (e) {
-            console.log(e)
-          }
-        },
-      },
-    })
+try {
+  const app = new App({
+    receiver: expressReceiver,
+  })
 
-const app = process.env.LOCAL_DEV
-  ? new App({
-      token: process.env.SLACK_BOT_TOKEN,
-      receiver: expressReceiver,
-    })
-  : new App({
-      receiver: expressReceiver,
-    })
+  app.command(COMMANDS.STANDUP, standup(app))
 
-app.command(COMMANDS.STANDUP, standup(app))
+  app.event(EVENTS.APP_HOME_VIEWED, home(app))
 
-app.event(EVENTS.APP_HOME_VIEWED, home(app))
+  app.action(ACTIONS.OPEN_SETUP_JIRA_MODAL, setupJira(app))
 
-app.action(ACTIONS.OPEN_SETUP_JIRA_MODAL, setupJira(app))
-
-app.view(VIEWS.HOME_AUTHENTICATED_VIEW, homeAuthenticated(app))
+  app.view(VIEWS.HOME_AUTHENTICATED_VIEW, homeAuthenticated(app))
+} catch (e) {
+  console.error(e)
+}
 
 module.exports = expressReceiver
