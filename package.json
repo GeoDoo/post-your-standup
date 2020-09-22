@@ -7,15 +7,13 @@
     "start": "nodemon server.js",
     "test:unit": "jest unit --env=node --passWithNoTests",
     "test:unit:cov": "jest unit --env=node --passWithNoTests --coverage --config=jest.config.json",
-    "report-coverage": "cat ./coverage/lcov.info | codecov",
     "prod:start": "pm2 kill && pm2 start server.js",
-    "release": "semantic-release",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md)\"",
-    "docker-dev": "docker-compose up",
-    "docker-prod": "docker-compose up -d",
     "web:start": "webpack-dev-server --open --hot --mode development",
-    "web:server:start": "nodemon web/server"
+    "web:server:start": "nodemon web/server",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
+    "release": "semantic-release"
   },
   "dependencies": {
     "@apollo/client": "^3.2.0",
