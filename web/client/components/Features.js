@@ -9,20 +9,31 @@ const Features = () => {
       <ul className="features">
         <li>
           <div>
-            <h3>Immediate feedback</h3>
+            <h3>Commands</h3>
             <p>
-              With a simple command, you can check and post your Jira tickets
-              for any project within your company or organization.
+              With a simple command, you can check and post which tickets you
+              are working on for any project within your company or
+              organization.
             </p>
           </div>
         </li>
         <li>
           <div>
-            <h3>Interactive setup</h3>
+            <h3>Home page</h3>
             <p>
-              You can setup your connection with Jira effortlessly with our
-              simple app Home page and our hints and tips on how to do it. We
-              value a good user experience ourselves too.
+              On our app&apos;s Home page you can find some helpful information
+              about the app, instructions on how to set it up and a connect to
+              Jira button once and for all.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Hints and helpful messages</h3>
+            <p>
+              If you type something wrong or you missed something and the result
+              you expected did not show up, do not worry! We got your back with
+              our informative and insightful help messages.
             </p>
           </div>
         </li>
