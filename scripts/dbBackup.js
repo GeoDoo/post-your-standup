@@ -8,12 +8,10 @@ if (!args[0]) {
   process.exit(1)
 }
 
-const dateTime = new Date().toISOString().replace(/T/, '_').replace(/\..+/, '')
-
-const path = args[0]
-
-let fileName = dateTime + '_standup_db_backup.archive'
-fileName = path + '/' + fileName
+const fileName = `${args[0]}/${new Date()
+  .toISOString()
+  .replace(/T/, '_')
+  .replace(/\..+/, '')}_standup_db_backup.archive`
 
 const command =
   'docker exec standup-mongo-db sh -c ' +
