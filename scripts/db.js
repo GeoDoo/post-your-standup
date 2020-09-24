@@ -14,24 +14,11 @@ const backup = path => {
     .replace(/T/, '_')
     .replace(/\..+/, '')}_standup_db_backup.archive`
 
-  const command =
-    'docker exec standup-mongo-db sh -c ' +
-    '"exec mongodump -u ' +
-    process.env.DB_USERNAME +
-    ' -p ' +
-    process.env.DB_PASSWORD +
-    ' -d ' +
-    process.env.DB_NAME +
-    ' --archive"' +
-    '>' +
-    fileName
+  const command = `docker exec standup-mongo-db sh -c "exec mongodump -u ${process.env.DB_USERNAME} -p ${process.env.DB_PASSWORD} -d ${process.env.DB_NAME} --archive" > ${fileName}`
 
   exec(command, (err, stdout, stderr) => {
     if (err) {
       console.error(err)
-    } else {
-      console.log(`stdout: ${stdout}`)
-      console.log(`stderr: ${stderr}`)
     }
   })
 }
@@ -59,9 +46,9 @@ const deleteOldBackups = filePath => {
         }
 
         const now = new Date().getTime()
-        const endTime = new Date(stat.ctime).getTime() + 604800000
+        const oneWeek = new Date(stat.ctime).getTime() + 604800000
 
-        if (now > endTime) {
+        if (now > oneWeek) {
           return fs.unlink(path.join(filePath, fileName), function (err) {
             if (err) {
               return console.error(err)
