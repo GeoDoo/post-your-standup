@@ -5,7 +5,9 @@ const path = require('path')
 
 const backup = path => {
   if (!path) {
-    console.error('Usage:\tnode db.js /path/to/store/backup/file')
+    console.error(
+      'Usage:\tnode  -e \'require("./db.js").backup("/path/to/store/backup/file")',
+    )
     process.exit(1)
   }
 
@@ -16,7 +18,7 @@ const backup = path => {
 
   const command = `docker exec standup-mongo-db sh -c "exec mongodump -u ${process.env.DB_USERNAME} -p ${process.env.DB_PASSWORD} -d ${process.env.DB_NAME} --archive" > ${fileName}`
 
-  exec(command, (err, stdout, stderr) => {
+  exec(command, err => {
     if (err) {
       console.error(err)
     }
@@ -25,13 +27,15 @@ const backup = path => {
 
 const deleteOldBackups = filePath => {
   if (!filePath) {
-    console.error('Usage:\tnode db.js /path/to/store/backup/file')
+    console.error(
+      'Usage:\tnode  -e \'require("./db.js").deleteOldBackups("/path/to/store/backup/file")',
+    )
     process.exit(1)
   }
 
   fs.readdir(filePath, function (err, files) {
     if (err) {
-      console.log(err)
+      console.error(err)
       return
     }
 
