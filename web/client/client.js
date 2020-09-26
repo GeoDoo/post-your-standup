@@ -6,7 +6,7 @@ import config from '../config'
 const httpLink = createHttpLink({
   uri:
     process.env.NODE_ENV === 'production'
-      ? `${config.server.prod.host}:${config.server.port}/graphql`
+      ? `${config.server.prod.host}/graphql`
       : `http://localhost:${config.server.port}/graphql`,
 })
 
