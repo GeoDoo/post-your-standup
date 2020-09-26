@@ -4,7 +4,10 @@ import { setContext } from '@apollo/client/link/context'
 import config from '../config'
 
 const httpLink = createHttpLink({
-  uri: `http://localhost:${config.server.port}/graphql`,
+  uri:
+    process.env.NODE_ENV === 'production'
+      ? `${config.server.prod.host}:${config.server.port}/graphql`
+      : `http://localhost:${config.server.port}/graphql`,
 })
 
 const authLink = setContext((_, { headers }) => {

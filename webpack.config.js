@@ -57,6 +57,7 @@ module.exports = {
       'process.env.AUTH_AUDIENCE': JSON.stringify(process.env.AUTH_AUDIENCE),
       'process.env.AUTH_DOMAIN': JSON.stringify(process.env.AUTH_DOMAIN),
       'process.env.AUTH_CLIENT_ID': JSON.stringify(process.env.AUTH_CLIENT_ID),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ],
   devtool: 'source-map',

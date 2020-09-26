@@ -81,7 +81,7 @@ jobs:
             npm run prod:kill &&
             npm run prod:start &&
             npm run web:server:prod:start &&
-            npm run web:client:build'
+            npm run web:client:prod'
           no_output_timeout: 30m
       - slack/status:
           failure_message: ':red_circle: $CIRCLE_JOB job has failed!'

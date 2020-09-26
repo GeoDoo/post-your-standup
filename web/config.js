@@ -1,5 +1,8 @@
 module.exports = {
   server: {
+    prod: {
+      host: 'https://post-your-standup-dashboard-api.codinginsights.blog',
+    },
     port: 4100,
   },
   prod: {
