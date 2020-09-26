@@ -6,6 +6,14 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/GeoDoo/post-your-standup)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/GeoDoo/post-your-standup)
 
+### Website
+
+You can find more info about our application and you will be able to install it here if you like:
+
+[Post Your Standup website](https://post-your-standup.codinginsights.blog)
+
+Thank you!
+
 ### Contributing
 
 If you are interested in contributing to our project, you can find a more
