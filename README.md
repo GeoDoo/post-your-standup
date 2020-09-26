@@ -8,7 +8,8 @@
 
 ### Website
 
-You can find more info about our application and you will be able to install it here if you like:
+You can find more info about our application and you will be able to install it
+here if you like:
 
 [Post Your Standup website](https://post-your-standup.codinginsights.blog)
 
