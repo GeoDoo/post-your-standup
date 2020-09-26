@@ -3,7 +3,7 @@ module.exports = {
     port: 4100,
   },
   prod: {
-    app: 'https://post-your-standup.codinginsights.blog',
+    app: 'https://post-your-standup-api.codinginsights.blog',
     installUrlPath: '/install-url',
   },
 }
