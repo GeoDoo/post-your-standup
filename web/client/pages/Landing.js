@@ -16,8 +16,8 @@ import './Page.pcss'
 const Landing = () => {
   return (
     <div className="page">
-      <a href="https://github.com/GeoDoo/post-your-standup">
-        <img src={ribbon} className="ribbon" alt="Fork me on GitHub" />
+      <a className="ribbon" href="https://github.com/GeoDoo/post-your-standup">
+        <img src={ribbon} alt="Fork me on GitHub" />
       </a>
       <Intro />
       <HowItWorks />
