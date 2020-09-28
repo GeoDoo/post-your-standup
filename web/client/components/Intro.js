@@ -8,10 +8,11 @@ const Intro = () => {
       <div className="half">
         <h1>Post Your Standup</h1>
         <div className="pitch">
-          <p>Add Post Your Standup to your workspace,</p>
-          <p> paste your standup statement directly in,</p>
-          <p>and start arguing about it,</p>
-          <p>with no hassle at all!</p>
+          <p>
+            Add Post Your Standup to your workspace, paste your standup
+            statement directly in,and start arguing about it, with no hassle at
+            all!
+          </p>
         </div>
         <AddToSlack />
       </div>
