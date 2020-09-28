@@ -26,9 +26,9 @@ jobs:
       - run:
           command: npm ci
       - run:
-          command: npm run test:unit:cov
+          command: npm run test:unit:coverage
       - run:
-          command: npm run report-coverage -- -t $CODECOV_TOKEN
+          command: npm run codecov:report -- -t $CODECOV_TOKEN
       - slack/status:
           failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
           success_message: ':tada: $CIRCLE_JOB job has succeeded!'
@@ -78,10 +78,10 @@ jobs:
             git reset --hard origin/master &&
             git pull &&
             npm install --verbose && 
-            npm run prod:kill &&
-            npm run prod:start &&
+            npm run app:prod:kill &&
+            npm run app:prod:start &&
             npm run web:server:prod:start &&
-            npm run web:client:prod'
+            npm run web:client:prod:build'
           no_output_timeout: 30m
       - slack/status:
           failure_message: ':red_circle: $CIRCLE_JOB job has failed!'

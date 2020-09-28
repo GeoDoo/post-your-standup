@@ -12,4 +12,4 @@ RUN npm ci --only=production
 
 COPY --chown=node:node . .
 
-RUN npm run prod:start
+RUN npm run app:prod:start
