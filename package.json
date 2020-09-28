@@ -14,7 +14,7 @@
     "web:client:start": "webpack-dev-server --open --hot --mode development",
     "web:client:prod": "cross-env NODE_ENV=production webpack -p",
     "web:server:start": "nodemon web/server",
-    "web:server:prod:start": "pm2 start web/server",
+    "web:server:prod:start": "cross-env NODE_ENV=production pm2 start web/server",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "release": "semantic-release"
   },
