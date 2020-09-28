@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 require('dotenv').config()
 
@@ -49,7 +50,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: __dirname + '/web/client/index.html',
+      template: path.resolve(__dirname, 'web/client/index.html'),
       filename: 'index.html',
       inject: 'body',
     }),
@@ -58,6 +59,14 @@ module.exports = {
       'process.env.AUTH_DOMAIN': JSON.stringify(process.env.AUTH_DOMAIN),
       'process.env.AUTH_CLIENT_ID': JSON.stringify(process.env.AUTH_CLIENT_ID),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'web/client/.htaccess'),
+          to: path.resolve(__dirname, 'dist'),
+        },
+      ],
     }),
   ],
   devtool: 'source-map',
