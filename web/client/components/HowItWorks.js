@@ -28,7 +28,7 @@ const HowItWorks = () => {
           </div>
         </li>
         <li>
-          <div className="full">
+          <div className="full reverse">
             <div className="half">
               <img src={connectToJira} />
             </div>

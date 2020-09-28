@@ -51,3 +51,93 @@ img {
   display: inline-block;
   vertical-align: bottom;
 }
+
+@media only screen and (max-width: 600px) {
+  html,
+  body {
+    text-align: center;
+  }
+
+  p {
+    text-align: inherit;
+  }
+
+  header {
+    display: block;
+  }
+
+  #user-menu {
+    margin-bottom: 32px;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  div.section {
+    width: auto;
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    margin-bottom: 60px;
+  }
+
+  .full {
+    flex-direction: column;
+
+    .half {
+      margin-bottom: 40px;
+    }
+  }
+
+  .reverse {
+    flex-direction: column-reverse;
+  }
+
+  .page,
+  .section,
+  .half {
+    margin: auto;
+    padding: 0;
+    width: auto;
+  }
+
+  .ribbon {
+    position: absolute;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .copyright p {
+    margin-bottom: 16px;
+  }
+
+  .workspaces {
+    grid-template-columns: auto;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .ribbon {
+    z-index: 1;
+  }
+
+  .section {
+    width: auto;
+  }
+
+  .menu {
+    flex-direction: column-reverse;
+
+    li {
+      margin-bottom: 4px;
+    }
+  }
+
+  .workspaces {
+    grid-template-columns: auto;
+  }
+}
