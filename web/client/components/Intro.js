@@ -10,7 +10,7 @@ const Intro = () => {
         <div className="pitch">
           <p>
             Add Post Your Standup to your workspace, paste your standup
-            statement directly in,and start arguing about it, with no hassle at
+            statement directly in, and start arguing about it, with no hassle at
             all!
           </p>
         </div>

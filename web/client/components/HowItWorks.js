@@ -17,7 +17,7 @@ const HowItWorks = () => {
               <span className="step">#1</span>
               <h3>Install Post Your Standup to your workspace</h3>
               <p>
-                Simply click on one of the Add to Slack buttons,then choose the
+                Simply click on one of the Add to Slack buttons, then choose the
                 channel you want to integrate it with, and finally the Allow
                 button!
               </p>
@@ -50,6 +50,7 @@ const HowItWorks = () => {
               <h3>Post Your Standup on the channel</h3>
               <p>
                 Type: <b>/standup your_Jira_email your_Jira_project</b>
+                <br />
                 We need your email to fetch all issues assigned to you, and your
                 project key, meaning your tickets&rsquo; prefix. If you have a
                 ticket SBE-123, then SBE is what you need to provide us.
