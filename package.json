@@ -46,11 +46,11 @@
     "type": "git",
     "url": "git+https://github.com/GeoDoo/post-your-standup.git"
   },
-  "author": "George Karametas <geometas@hotmail.com> (https://geodoo.work/)",
+  "author": "Georgios Karametas <geometas@hotmail.com> (https://geodoo.work/)",
   "bugs": {
     "url": "https://github.com/GeoDoo/post-your-standup/issues"
   },
-  "license": "GNU GPL v3.0",
+  "license": "LGPL v2.1",
   "keywords": [
     "node",
     "express"
