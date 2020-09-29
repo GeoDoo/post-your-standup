@@ -107,19 +107,38 @@ module.exports = app => async ({ ack, payload, context }) => {
       },
     )
     const { issues: yesterdayIssues } = await yesterdayResults.json()
+    const blockersJql = `jql=project=${project} AND assignee=${currentUser.accountId} AND issueLinkType = blocks`
+    const blockersResults = await fetch(
+      `${jiraUser.project}/${JIRA_API_PATH.SEARCH}?${blockersJql}`,
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      },
+    )
+    const { issues: blockersIssues } = await blockersResults.json()
+
+    const blocks = [
+      getSectionBlock(
+        `> *@${payload.user_name}'s standup for today, ${today()}*`,
+      ),
+      getSectionBlock('*Yesterday:*'),
+      getSectionBlock(`${formatIssues(yesterdayIssues, jiraUser.project)}`),
+      getSectionBlock('*Today:*'),
+      getSectionBlock(`${formatIssues(todayIssues, jiraUser.project)}`),
+    ]
+
+    if (blockersIssues.length > 0) {
+      blocks.push(
+        getSectionBlock('*Blockers:*'),
+        getSectionBlock(`${formatIssues(blockersIssues, jiraUser.project)}`),
+      )
+    }
 
     await app.client.chat.postMessage({
       token: context.botToken,
       channel: payload.channel_id,
-      blocks: [
-        getSectionBlock(
-          `> *@${payload.user_name}'s standup for today, ${today()}*`,
-        ),
-        getSectionBlock('Yesterday:'),
-        getSectionBlock(`${formatIssues(yesterdayIssues, jiraUser.project)}`),
-        getSectionBlock('Today:'),
-        getSectionBlock(`${formatIssues(todayIssues, jiraUser.project)}`),
-      ],
+      blocks,
     })
   } catch (e) {
     console.error(e)
