@@ -7,8 +7,9 @@ const formatIssues = (data, projectUrl) => {
   return data
     .map(
       (issue, index) =>
-        `${index + 1}.  ${issue.fields.summary}\n
-      Link: ${projectUrl}/browse/${issue.key}\n
+        `${index + 1}.  <${projectUrl}/browse/${issue.key}|${
+          issue.fields.summary
+        }>\n
       Status: *${issue.fields.status.name}*\n
       _Last updated ${moment(issue.fields.updated).fromNow()}_\n`,
     )

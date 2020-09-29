@@ -87,7 +87,7 @@ const TEXT = {
   COMMANDS: {
     HELP_TEXT_MATCH: 'help',
     STANDUP: {
-      NO_ISSUES_FOUND: 'No issues found. All done here. Great job!',
+      NO_ISSUES_FOUND: 'No tickets found. All done here. Great job!',
       HELP:
         "> This app is relatively easy to use. It needs two pieces of information from you: your Jira email and your tickets' prefix. Easy peasy!\n An example can be: `/standup my.jira.email@company.com DSUS`\n _hint: if you have a ticket DSUS-1 or SMD-234, then DSUS and SMD are the prefixes_",
       INVALID_EMAIL:

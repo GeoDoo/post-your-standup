@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Helpers formatIssues should provide standup issues in a nice format 1`] = `
-"1.  summary
-
-      Link: https://test.atlassian.net/browse/key
+"1.  <https://test.atlassian.net/browse/key|summary>
 
       Status: *undefined*
 

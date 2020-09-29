@@ -87,16 +87,26 @@ module.exports = app => async ({ ack, payload, context }) => {
       }
     }
 
-    const jql = `jql=project=${project} AND assignee=${currentUser.accountId}`
-    const results = await fetch(
-      `${jiraUser.project}/${JIRA_API_PATH.SEARCH}?${jql}`,
+    const todayJql = `jql=project=${project} AND assignee=${currentUser.accountId} AND updatedDate >= startOfDay() and updatedDate < endOfDay()`
+    const todayResults = await fetch(
+      `${jiraUser.project}/${JIRA_API_PATH.SEARCH}?${todayJql}`,
       {
         headers: {
           Authorization: `Basic ${token}`,
         },
       },
     )
-    const { issues } = await results.json()
+    const { issues: todayIssues } = await todayResults.json()
+    const yesterdayJql = `jql=project=${project} AND assignee=${currentUser.accountId} AND updatedDate < -1d AND updatedDate > -2d ORDER BY updatedDate asc`
+    const yesterdayResults = await fetch(
+      `${jiraUser.project}/${JIRA_API_PATH.SEARCH}?${yesterdayJql}`,
+      {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      },
+    )
+    const { issues: yesterdayIssues } = await yesterdayResults.json()
 
     await app.client.chat.postMessage({
       token: context.botToken,
@@ -105,11 +115,10 @@ module.exports = app => async ({ ack, payload, context }) => {
         getSectionBlock(
           `> *@${payload.user_name}'s standup for today, ${today()}*`,
         ),
-        getSectionBlock('Jira tickets currently working on:'),
-        // limit to 16 issues = 2845 chars, due to invalid_blocks error: max length 3001 chars
-        getSectionBlock(
-          `${formatIssues(issues.slice(0, 16), jiraUser.project)}`,
-        ),
+        getSectionBlock('Yesterday:'),
+        getSectionBlock(`${formatIssues(yesterdayIssues, jiraUser.project)}`),
+        getSectionBlock('Today:'),
+        getSectionBlock(`${formatIssues(todayIssues, jiraUser.project)}`),
       ],
     })
   } catch (e) {
