@@ -107,7 +107,7 @@ module.exports = app => async ({ ack, payload, context }) => {
       },
     )
     const { issues: yesterdayIssues } = await yesterdayResults.json()
-    const blockersJql = `jql=project=${project} AND assignee=${currentUser.accountId} AND issueLinkType = blocks`
+    const blockersJql = `jql=project=${project} AND assignee=${currentUser.accountId} AND (issueLinkType = blocks or issueLinkType = "is blocked by")`
     const blockersResults = await fetch(
       `${jiraUser.project}/${JIRA_API_PATH.SEARCH}?${blockersJql}`,
       {
@@ -128,7 +128,7 @@ module.exports = app => async ({ ack, payload, context }) => {
       getSectionBlock(`${formatIssues(todayIssues, jiraUser.project)}`),
     ]
 
-    if (blockersIssues.length > 0) {
+    if (blockersIssues && blockersIssues.length > 0) {
       blocks.push(
         getSectionBlock('*Blockers:*'),
         getSectionBlock(`${formatIssues(blockersIssues, jiraUser.project)}`),
