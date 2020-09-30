@@ -97,7 +97,7 @@ module.exports = app => async ({ ack, payload, context }) => {
       },
     )
     const { issues: todayIssues } = await todayResults.json()
-    const yesterdayJql = `jql=project=${project} AND assignee=${currentUser.accountId} AND updatedDate < -1d AND updatedDate > -2d ORDER BY updatedDate asc`
+    const yesterdayJql = `jql=project=${project} AND assignee=${currentUser.accountId} AND updatedDate < startOfDay() AND updatedDate > -1d ORDER BY updatedDate asc`
     const yesterdayResults = await fetch(
       `${jiraUser.project}/${JIRA_API_PATH.SEARCH}?${yesterdayJql}`,
       {
