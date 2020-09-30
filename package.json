@@ -33,7 +33,7 @@
     "moment": "^2.29.0",
     "mongoose": "^5.10.7",
     "node-fetch": "^2.6.1",
-    "pm2": "^4.4.1",
+    "pm2": "^4.5.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
