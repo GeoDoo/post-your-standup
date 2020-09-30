@@ -9,9 +9,9 @@ const formatIssues = (data, projectUrl) => {
       (issue, index) =>
         `${index + 1}.  <${projectUrl}/browse/${issue.key}|${
           issue.fields.summary
-        }>\n
-      Status: *${issue.fields.status.name}*\n
-      _Last updated ${moment(issue.fields.updated).fromNow()}_\n`,
+        }>, *${issue.fields.status.name}*, _Last updated ${moment(
+          issue.fields.updated,
+        ).fromNow()}_\n`,
     )
     .join('')
 }

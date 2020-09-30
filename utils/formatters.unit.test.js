@@ -20,7 +20,7 @@ describe('Helpers', () => {
           key: 'key',
           fields: {
             summary: 'summary',
-            status: 'status',
+            status: { name: 'status' },
             updated: 10021230120,
           },
         },

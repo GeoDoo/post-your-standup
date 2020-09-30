@@ -1,10 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Helpers formatIssues should provide standup issues in a nice format 1`] = `
-"1.  <https://test.atlassian.net/browse/key|summary>
-
-      Status: *undefined*
-
-      _Last updated 6 months ago_
+"1.  <https://test.atlassian.net/browse/key|summary>, *status*, _Last updated 6 months ago_
 "
 `;
