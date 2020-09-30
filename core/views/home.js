@@ -5,6 +5,7 @@ const {
   getButtonBlock,
 } = require('@core/blocks')
 const { findByTeamId } = require('@db/models/Workspace')
+const { storeError } = require('@db/models/Logger')
 
 module.exports = app => async ({ event, context }) => {
   try {
@@ -71,5 +72,6 @@ module.exports = app => async ({ event, context }) => {
     }
   } catch (e) {
     console.error(e)
+    await storeError(e)
   }
 }

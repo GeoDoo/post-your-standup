@@ -4,6 +4,7 @@ const { formatIssues, today } = require('@utils/formatters')
 const { btoa } = require('@utils/encoding')
 const { isEmail } = require('@utils/validate')
 const { findByTeamId } = require('@db/models/Workspace')
+const { storeError } = require('@db/models/Logger')
 const { getSectionBlock } = require('@core/blocks')
 
 module.exports = app => async ({ ack, payload, context }) => {
@@ -142,5 +143,6 @@ module.exports = app => async ({ ack, payload, context }) => {
     })
   } catch (e) {
     console.error(e)
+    await storeError(e)
   }
 }
