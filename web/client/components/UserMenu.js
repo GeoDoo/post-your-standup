@@ -3,6 +3,7 @@ import React from 'react'
 import LoginMenuItem from './LoginMenuItem'
 import LogoutMenuItem from './LogoutMenuItem'
 import DashboardMenuItem from './DashboardMenuItem'
+import LogsMenuItem from './LogsMenuItem'
 
 import './UserMenu.pcss'
 
@@ -13,6 +14,7 @@ const UserMenu = () => {
         <LoginMenuItem />
         <LogoutMenuItem />
         <DashboardMenuItem />
+        <LogsMenuItem />
       </ul>
     </nav>
   )
