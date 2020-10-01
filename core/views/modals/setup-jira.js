@@ -5,6 +5,7 @@ const {
   getDividerBlock,
   getInputBlock,
 } = require('@core/blocks')
+const { storeError } = require('@db/models/Logger')
 
 module.exports = app => async ({ ack, body, context }) => {
   ack()
@@ -50,5 +51,6 @@ module.exports = app => async ({ ack, body, context }) => {
     })
   } catch (e) {
     console.error(e)
+    await storeError(e)
   }
 }

@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import Frame from './components/Frame'
 import Landing from './pages/Landing'
 import Dashboard from './pages/Dashboard'
+import Logs from './pages/Logs'
 
 import './App.pcss'
 
@@ -21,6 +22,9 @@ const App = () => {
             </Route>
             <Route path="/dashboard">
               <Dashboard />
+            </Route>
+            <Route path="/logs">
+              <Logs />
             </Route>
           </Switch>
         </Router>

@@ -5,6 +5,7 @@ const {
   getButtonBlock,
 } = require('@core/blocks')
 const { upsertWorkspace } = require('@db/models/Workspace')
+const { storeError } = require('@db/models/Logger')
 
 module.exports = app => async ({ ack, body, view, context }) => {
   ack()
@@ -54,5 +55,6 @@ module.exports = app => async ({ ack, body, view, context }) => {
     })
   } catch (e) {
     console.error(e)
+    await storeError(e)
   }
 }

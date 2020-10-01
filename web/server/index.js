@@ -7,19 +7,32 @@ const jwksClient = require('jwks-rsa')
 
 const { getConnection } = require('@db')
 const { findAll } = require('@db/models/Workspace')
+const { fetchErrors } = require('@db/models/Logger')
 const config = require('@web/config')
 
 getConnection()
 
 const typeDefs = gql`
+  type Error {
+    name: String
+    message: String
+    stack: String
+  }
+
   type Workspace {
     teamId: String
     domain: String
     project: String
   }
 
+  type Log {
+    timestamp: Float
+    error: Error
+  }
+
   type Query {
     workspaces: [Workspace]
+    errors: [Log]
   }
 `
 
@@ -30,6 +43,15 @@ const resolvers = {
         await context.user
 
         return await findAll()
+      } catch (e) {
+        throw new AuthenticationError(e)
+      }
+    },
+    errors: async (_parent, _args, context) => {
+      try {
+        await context.user
+
+        return await fetchErrors()
       } catch (e) {
         throw new AuthenticationError(e)
       }
