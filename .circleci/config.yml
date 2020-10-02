@@ -14,7 +14,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: npm ci
+          command: npm install
       - slack/status:
           failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
           success_message: ':tada: $CIRCLE_JOB job has succeeded!'
@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: npm ci
+          command: npm install
       - run:
           command: npm run test:unit:coverage
       - run:
@@ -38,7 +38,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: npm ci
+          command: npm install
       - run:
           command: npm rum release
       - slack/status:
