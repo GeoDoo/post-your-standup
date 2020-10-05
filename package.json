@@ -38,7 +38,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "serialize-error": "^7.0.1",
-    "uuid": "^8.3.0"
+    "uuid": "^8.3.1"
   },
   "engines": {
     "node": "12.x"
