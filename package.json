@@ -79,7 +79,7 @@
     "husky": "^4.3.0",
     "jest": "^26.5.3",
     "lint-staged": "^10.4.0",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.5",
     "postcss": "^8.1.1",
     "postcss-loader": "^4.0.4",
     "precss": "^4.0.0",
