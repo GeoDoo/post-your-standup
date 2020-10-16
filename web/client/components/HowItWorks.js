@@ -49,11 +49,24 @@ const HowItWorks = () => {
               <span className="step">#3</span>
               <h3>Post Your Standup on the channel</h3>
               <p>
-                Type: <b>/standup your_Jira_email your_Jira_project</b>
+                Type: <b>/standup [your_Jira_email] [your_Jira_project]</b>
+                <br />
                 <br />
                 We need your email to fetch all issues assigned to you, and your
                 project key, meaning your tickets&rsquo; prefix. If you have a
                 ticket SBE-123, then SBE is what you need to provide us.
+              </p>
+              <br />
+              <p>
+                There are three (3) sections on your standup statement:
+                Yesterday, Today and Blockers!
+              </p>
+              <br />
+              <p>
+                Blockers are optionally shown, since we hope you do not have
+                many! The tickets you are going to see there are based on these
+                criteria: time, you must be assigned to the particular ticket
+                and the ticket must have been updated! That is all!
               </p>
             </div>
             <div className="half">
