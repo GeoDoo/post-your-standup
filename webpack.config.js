@@ -5,8 +5,8 @@ const CopyPlugin = require('copy-webpack-plugin')
 
 require('dotenv').config()
 
-module.exports = {
-  mode: 'development',
+module.exports = env => ({
+  mode: env.production ? 'production' : 'development',
   entry: './web/client/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -69,11 +69,11 @@ module.exports = {
       ],
     }),
   ],
-  devtool: 'source-map',
+  devtool: env.production ? 'source-map' : 'eval',
   devServer: {
     historyApiFallback: true,
     host: 'localhost',
     port: 8080,
     disableHostCheck: true,
   },
-}
+})
