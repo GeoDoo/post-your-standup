@@ -15,6 +15,8 @@ jobs:
       - checkout
       - run:
           command: npm install
+      - run:
+          command: npm run web:client:prod:build
       - slack/status:
           failure_message: ':red_circle: $CIRCLE_JOB job has failed!'
           success_message: ':tada: $CIRCLE_JOB job has succeeded!'
