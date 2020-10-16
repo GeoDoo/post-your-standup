@@ -57,7 +57,7 @@
     "express"
   ],
   "devDependencies": {
-    "@babel/core": "^7.12.0",
+    "@babel/core": "^7.12.1",
     "@babel/preset-env": "^7.12.0",
     "@babel/preset-react": "^7.10.4",
     "@testing-library/react": "^11.1.0",
