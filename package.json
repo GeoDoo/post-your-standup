@@ -64,7 +64,7 @@
     "autoprefixer": "^10.0.1",
     "babel-loader": "^8.1.0",
     "codecov": "^3.8.0",
-    "commitizen": "^4.2.1",
+    "commitizen": "^4.2.2",
     "copy-webpack-plugin": "^6.2.1",
     "cross-env": "^7.0.2",
     "css-loader": "^5.0.0",
