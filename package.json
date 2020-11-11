@@ -34,8 +34,8 @@
     "mongoose": "^5.10.13",
     "node-fetch": "^2.6.1",
     "pm2": "^4.5.0",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "serialize-error": "^7.0.1",
     "uuid": "^8.3.1"
