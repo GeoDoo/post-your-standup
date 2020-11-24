@@ -84,7 +84,7 @@
     "postcss-loader": "^4.1.0",
     "precss": "^4.0.0",
     "prettier": "^2.2.0",
-    "semantic-release": "^17.2.4",
+    "semantic-release": "^17.3.0",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^4.44.2",
