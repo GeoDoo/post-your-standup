@@ -20,7 +20,7 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@apollo/client": "^3.2.7",
+    "@apollo/client": "^3.2.9",
     "@auth0/auth0-react": "^1.2.0",
     "@slack/bolt": "^2.4.1",
     "apollo-server": "^2.19.0",
