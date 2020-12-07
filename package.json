@@ -31,7 +31,7 @@
     "jwks-rsa": "^1.11.0",
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
-    "mongoose": "^5.11.3",
+    "mongoose": "^5.11.4",
     "node-fetch": "^2.6.1",
     "pm2": "^4.5.0",
     "react": "^17.0.1",
